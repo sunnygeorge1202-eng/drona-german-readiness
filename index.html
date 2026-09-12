@@ -168,6 +168,21 @@
   .overview-legend .dot.done{ background: var(--gold); }
   .overview-legend .dot.current{ background:transparent; border:1px solid var(--gold); }
   .overview-legend .dot.upcoming{ background:transparent; border:1px solid var(--line); }
+  .overview-start-btn{
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold);
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-family:'Inter',sans-serif;
+    font-size: 0.82rem;
+    font-weight:600;
+    cursor:pointer;
+    width:100%;
+    margin-top: 4px;
+    transition: background 0.15s ease;
+  }
+  .overview-start-btn:hover{ background: rgba(201,168,76,0.22); }
 
   /* ---------- Screens ---------- */
   .screen{ display:none; flex:1; flex-direction:column; }
@@ -461,6 +476,28 @@
     margin-bottom: 22px;
     padding: 10px 0 4px;
   }
+  .heatmap{ margin-bottom: 8px; }
+  .heat-row{ margin-bottom: 16px; }
+  .heat-row-label{
+    display:flex; justify-content:space-between;
+    font-size:0.85rem; opacity:0.8; margin-bottom:7px;
+  }
+  .heat-row-label b{ font-weight:600; }
+  .heat-row-pct{ font-family:'Playfair Display', serif; color: var(--gold); font-weight:700; }
+  .heat-row-cells{ display:flex; gap:4px; }
+  .heat-cell{
+    flex:1; min-width:8px; height:24px; border-radius:5px;
+    transition: transform 0.15s ease;
+  }
+  .heat-cell:hover{ transform: scaleY(1.15); }
+  .heat-legend{
+    display:flex; align-items:center; gap:10px;
+    font-size:0.7rem; opacity:0.55; margin-top:14px; margin-bottom:24px;
+  }
+  .heat-legend-bar{
+    flex:1; max-width:140px; height:6px; border-radius:4px;
+    background: linear-gradient(90deg, hsl(6,60%,38%), hsl(45,65%,58%));
+  }
   .dim-bars{ margin-bottom: 30px; }
   .dim-bar-row{ margin-bottom: 16px; }
   .dim-bar-label{
@@ -538,7 +575,7 @@
       </div>
       <div class="overview-panel-sub" id="overviewSub">14 of 26 questions completed</div>
       <div id="overviewGrid"></div>
-      <div class="overview-legend">
+      <div class="overview-legend" id="overviewLegendRow">
         <span><i class="dot done"></i> Answered</span>
         <span><i class="dot current"></i> Current</span>
         <span><i class="dot upcoming"></i> Not yet reached</span>
@@ -587,6 +624,7 @@
       </div>
 
       <button class="btn" id="startBtn">Begin Assessment</button>
+      <button class="btn ghost" id="previewSectionsBtn" style="margin-top:10px;">Preview sections &amp; choose where to start</button>
       <div class="link-row">Already started? <button class="linklike" id="resumeLink">Resume with your email</button></div>
       <div class="login-foot-note">Your progress is saved automatically as you go.<br>Sessions remain open for 14 days.</div>
     </div>
@@ -642,7 +680,7 @@
     </div>
 
     <div class="section-title">By dimension</div>
-    <div class="radar-wrap" id="radarWrap"></div>
+    <div class="radar-wrap" id="heatmapWrap"></div>
     <div class="dim-bars" id="dimBars"></div>
 
     <div class="section-title">Trade clusters that fit your profile</div>
@@ -962,11 +1000,28 @@ let state = {
   currentDim: 0,
   currentItem: 0,
   responses: {}, // itemId -> { raw, score }
-  complete: false
+  complete: false,
+  dimOrder: [0,1,2,3] // traversal order of DIMENSIONS indices for this session
 };
 
 const flatItems = [];
 DIMENSIONS.forEach((d, di) => d.items.forEach((it, ii) => flatItems.push({ dimIndex: di, itemIndex: ii, dimId: d.id, item: it })));
+
+function getDimOrder(){
+  return (state.dimOrder && state.dimOrder.length === DIMENSIONS.length) ? state.dimOrder : [0,1,2,3];
+}
+function orderedFlatItems(){
+  const order = getDimOrder();
+  const out = [];
+  order.forEach(di => DIMENSIONS[di].items.forEach((it, ii) => out.push({ dimIndex: di, itemIndex: ii, item: it })));
+  return out;
+}
+function nextDimAfter(di){
+  const order = getDimOrder();
+  const pos = order.indexOf(di);
+  if(pos === -1 || pos + 1 >= order.length) return null;
+  return order[pos + 1];
+}
 
 // ---------- Persistence (localStorage demo layer) ----------
 function storageKey(email){ return "garaf_session_" + email.trim().toLowerCase(); }
@@ -1033,57 +1088,91 @@ document.getElementById("overviewModal").addEventListener("click", (e) => {
   if(e.target.id === "overviewModal") e.currentTarget.classList.remove("active");
 });
 
-function renderOverview(open){
-  const done = Object.keys(state.responses).length;
+function renderOverview(open, opts){
+  const selectMode = !!(opts && opts.selectMode);
+  const done = selectMode ? 0 : Object.keys(state.responses).length;
   const total = flatItems.length;
-  document.getElementById("overviewSub").textContent = `${done} of ${total} questions completed`;
+
+  document.getElementById("overviewSub").textContent = selectMode
+    ? "Choose which section to begin with — questions within a section still run in order."
+    : `${done} of ${total} questions completed`;
 
   const grid = document.getElementById("overviewGrid");
   grid.innerHTML = "";
   DIMENSIONS.forEach((d, di) => {
-    const dimDone = d.items.filter(it => state.responses[it.id]).length;
+    const dimDone = selectMode ? 0 : d.items.filter(it => state.responses[it.id]).length;
     const block = document.createElement("div");
     block.className = "overview-dim-block";
     const label = document.createElement("div");
     label.className = "overview-dim-label";
-    label.innerHTML = `<span>${d.name}</span><span>${dimDone}/${d.items.length}</span>`;
-    block.appendChild(label);
-    const cellGrid = document.createElement("div");
-    cellGrid.className = "overview-item-grid";
-    d.items.forEach((it, ii) => {
-      const cell = document.createElement("div");
-      cell.className = "overview-cell";
-      const isDone = !!state.responses[it.id];
-      const isCurrent = di === state.currentDim && ii === state.currentItem && !state.complete;
-      if(isDone){ cell.classList.add("done"); cell.textContent = "✓"; }
-      else if(isCurrent){ cell.classList.add("current"); cell.textContent = String(ii+1); }
-      else { cell.textContent = String(ii+1); }
-      cellGrid.appendChild(cell);
-    });
-    block.appendChild(cellGrid);
+
+    if(selectMode){
+      label.innerHTML = `<span>${d.name} <span style="opacity:0.5;">(${d.items.length} questions, ${d.estimate.replace('About ','~')})</span></span>`;
+      const startBtn = document.createElement("button");
+      startBtn.textContent = "Start here";
+      startBtn.className = "overview-start-btn";
+      startBtn.addEventListener("click", () => beginSession(di));
+      block.appendChild(label);
+      block.appendChild(startBtn);
+    } else {
+      label.innerHTML = `<span>${d.name}</span><span>${dimDone}/${d.items.length}</span>`;
+      block.appendChild(label);
+      const cellGrid = document.createElement("div");
+      cellGrid.className = "overview-item-grid";
+      d.items.forEach((it, ii) => {
+        const cell = document.createElement("div");
+        cell.className = "overview-cell";
+        const isDone = !!state.responses[it.id];
+        const isCurrent = di === state.currentDim && ii === state.currentItem && !state.complete;
+        if(isDone){ cell.classList.add("done"); cell.textContent = "✓"; }
+        else if(isCurrent){ cell.classList.add("current"); cell.textContent = String(ii+1); }
+        else { cell.textContent = String(ii+1); }
+        cellGrid.appendChild(cell);
+      });
+      block.appendChild(cellGrid);
+    }
     grid.appendChild(block);
   });
+
+  document.getElementById("overviewLegendRow").style.display = selectMode ? "none" : "flex";
 
   if(open) document.getElementById("overviewModal").classList.add("active");
 }
 
 // ---------- Landing ----------
-document.getElementById("startBtn").addEventListener("click", () => {
+function validateEntry(){
   const name = document.getElementById("nameInput").value.trim();
   const email = document.getElementById("emailInput").value.trim();
   if(!name || !email || !email.includes("@")){
     alert("Please enter your name and a valid email to begin.");
-    return;
+    return null;
   }
-  state.name = name;
-  state.email = email;
+  return { name, email };
+}
+
+function beginSession(startDimIndex){
+  const entry = validateEntry();
+  if(!entry) return;
+  const order = [startDimIndex, ...DIMENSIONS.map((_,i)=>i).filter(i => i !== startDimIndex)];
+  state.name = entry.name;
+  state.email = entry.email;
   state.startedAt = Date.now();
-  state.currentDim = 0;
+  state.dimOrder = order;
+  state.currentDim = startDimIndex;
   state.currentItem = 0;
   state.responses = {};
   state.complete = false;
   saveState();
-  enterDimensionIntro(0);
+  document.getElementById("overviewModal").classList.remove("active");
+  enterDimensionIntro(startDimIndex);
+}
+
+document.getElementById("startBtn").addEventListener("click", () => beginSession(0));
+
+document.getElementById("previewSectionsBtn").addEventListener("click", () => {
+  const entry = validateEntry();
+  if(!entry) return;
+  renderOverview(true, { selectMode: true });
 });
 
 document.getElementById("resumeLink").addEventListener("click", () => showScreen("screen-resume"));
@@ -1118,7 +1207,9 @@ document.getElementById("resumeSubmitBtn").addEventListener("click", () => {
 function enterDimensionIntro(dimIndex){
   state.currentDim = dimIndex;
   const d = DIMENSIONS[dimIndex];
-  document.getElementById("dimIntroEyebrow").textContent = `Section ${dimIndex+1} of ${DIMENSIONS.length}`;
+  const order = getDimOrder();
+  const posInOrder = order.indexOf(dimIndex) + 1;
+  document.getElementById("dimIntroEyebrow").textContent = `Section ${posInOrder} of ${order.length}`;
   document.getElementById("dimIntroTitle").textContent = d.name;
   document.getElementById("dimIntroDesc").textContent = d.desc;
   document.getElementById("dimIntroEstimate").textContent = "⏱ " + d.estimate;
@@ -1139,9 +1230,10 @@ function currentFlatIndex(){
 }
 
 function goToCurrentQuestion(fromResume){
-  // find first unanswered item overall, in order
-  for(let i=0;i<flatItems.length;i++){
-    const f = flatItems[i];
+  // find first unanswered item, following this session's chosen dimension order
+  const ordered = orderedFlatItems();
+  for(let i=0;i<ordered.length;i++){
+    const f = ordered[i];
     if(!state.responses[f.item.id]){
       state.currentDim = f.dimIndex;
       state.currentItem = f.itemIndex;
@@ -1296,13 +1388,16 @@ function advance(){
     state.currentItem += 1;
     saveState();
     renderQuestion();
-  } else if(state.currentDim + 1 < DIMENSIONS.length){
-    state.currentDim += 1;
-    state.currentItem = 0;
-    saveState();
-    enterDimensionIntro(state.currentDim);
   } else {
-    finishAssessment();
+    const nd = nextDimAfter(state.currentDim);
+    if(nd !== null){
+      state.currentDim = nd;
+      state.currentItem = 0;
+      saveState();
+      enterDimensionIntro(nd);
+    } else {
+      finishAssessment();
+    }
   }
 }
 
@@ -1330,50 +1425,39 @@ function computeDimensionScores(){
   return out;
 }
 
-function buildRadarSVG(dimScores){
-  const cx = 150, cy = 150, R = 105;
-  const labels = ["Academic", "Occupational", "Germany", "Employability"];
-  const n = DIMENSIONS.length;
-  const angleFor = i => (-90 + (360/n)*i) * Math.PI/180;
+function heatColor(pct){
+  const p = Math.max(0, Math.min(1, pct));
+  const hue = 6 + (45-6)*p;   // deep red-orange at low, gold at high
+  const light = 34 + 22*p;
+  return `hsl(${hue.toFixed(0)}, 60%, ${light.toFixed(0)}%)`;
+}
 
-  const rings = [0.25, 0.5, 0.75, 1].map(f => {
-    const pts = DIMENSIONS.map((d,i) => {
-      const a = angleFor(i);
-      return `${cx + Math.cos(a)*R*f},${cy + Math.sin(a)*R*f}`;
-    }).join(" ");
-    return `<polygon points="${pts}" fill="none" stroke="rgba(245,240,232,0.14)" stroke-width="1"/>`;
+function buildHeatmapHTML(dimScores){
+  const rows = DIMENSIONS.map(d => {
+    const cells = d.items.map(it => {
+      const r = state.responses[it.id];
+      const pct = r ? Math.max(0, Math.min(1, r.score/it.weight)) : 0;
+      const color = heatColor(pct);
+      const pctLabel = Math.round(pct*100);
+      return `<div class="heat-cell" title="${it.sub} — ${pctLabel}%" style="flex:1; min-width:8px; height:24px; border-radius:5px; background:${color};"></div>`;
+    }).join("");
+    const dimPct = Math.round((dimScores[d.id].earned/dimScores[d.id].max)*100);
+    return `<div class="heat-row" style="margin-bottom:16px;">
+      <div class="heat-row-label" style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:7px; font-family:Arial, sans-serif; color:#F5F0E8;">
+        <b>${d.name}</b><span style="font-family:Georgia, serif; color:#C9A84C; font-weight:700;">${dimPct}%</span>
+      </div>
+      <div class="heat-row-cells" style="display:flex; gap:4px;">${cells}</div>
+    </div>`;
   }).join("");
 
-  const axes = DIMENSIONS.map((d,i) => {
-    const a = angleFor(i);
-    const x = cx + Math.cos(a)*R, y = cy + Math.sin(a)*R;
-    return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(245,240,232,0.14)" stroke-width="1"/>`;
-  }).join("");
-
-  const dataPts = DIMENSIONS.map((d,i) => {
-    const a = angleFor(i);
-    const pct = dimScores[d.id].earned / dimScores[d.id].max;
-    return { x: cx + Math.cos(a)*R*pct, y: cy + Math.sin(a)*R*pct, pct };
-  });
-  const dataPolygon = dataPts.map(p => `${p.x},${p.y}`).join(" ");
-  const dots = dataPts.map(p => `<circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#C9A84C"/>`).join("");
-
-  const labelEls = DIMENSIONS.map((d,i) => {
-    const a = angleFor(i);
-    const lx = cx + Math.cos(a)*(R+28), ly = cy + Math.sin(a)*(R+28);
-    const anchor = Math.abs(Math.cos(a)) < 0.3 ? "middle" : (Math.cos(a) > 0 ? "start" : "end");
-    const pct = Math.round((dimScores[d.id].earned/dimScores[d.id].max)*100);
-    return `<text x="${lx}" y="${ly-4}" text-anchor="${anchor}" font-family="Inter, Arial, sans-serif" font-size="10.5" fill="#F5F0E8" opacity="0.85">${labels[i]}</text>
-            <text x="${lx}" y="${ly+11}" text-anchor="${anchor}" font-family="Georgia, serif" font-size="13" font-weight="700" fill="#C9A84C">${pct}%</text>`;
-  }).join("");
-
-  return `<svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
-    ${rings}
-    ${axes}
-    <polygon points="${dataPolygon}" fill="rgba(201,168,76,0.22)" stroke="#C9A84C" stroke-width="2"/>
-    ${dots}
-    ${labelEls}
-  </svg>`;
+  return `<div>
+    ${rows}
+    <div style="display:flex; align-items:center; gap:10px; font-size:0.7rem; opacity:0.55; margin-top:14px; margin-bottom:8px; font-family:Arial, sans-serif; color:#F5F0E8;">
+      <span>Needs attention</span>
+      <div style="flex:1; max-width:140px; height:6px; border-radius:4px; background:linear-gradient(90deg, hsl(6,60%,38%), hsl(45,65%,58%));"></div>
+      <span>Strong</span>
+    </div>
+  </div>`;
 }
 
 function renderResults(){
@@ -1411,7 +1495,7 @@ function renderResults(){
   const barsEl = document.getElementById("dimBars");
   barsEl.innerHTML = "";
 
-  document.getElementById("radarWrap").innerHTML = buildRadarSVG(dimScores);
+  document.getElementById("heatmapWrap").innerHTML = buildHeatmapHTML(dimScores);
 
   const narratives = {
     academic: { high: "Strong learning and academic foundation.", low: "Consider extra support with core study skills before starting." },
@@ -1588,7 +1672,7 @@ function buildReportHTML(){
   </div>
 
   <h2 class="section">Readiness profile</h2>
-  <div style="display:flex; justify-content:center; margin-bottom:10px;">${buildRadarSVG(dimScores)}</div>
+  <div style="margin-bottom:10px;">${buildHeatmapHTML(dimScores)}</div>
 
   <h2 class="section">Dimension breakdown</h2>
   <table>${dimRows}</table>
