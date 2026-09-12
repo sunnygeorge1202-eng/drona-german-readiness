@@ -88,6 +88,86 @@
     opacity:0.7;
     margin-top:8px;
   }
+  .progress-top-row{
+    display:flex; align-items:center; gap:12px; margin-top:16px;
+  }
+  .progress-top-row .progress-shell{ margin-top:0; flex:1; }
+  .overview-btn{
+    display:flex; align-items:center; gap:7px;
+    background: rgba(245,240,232,0.06);
+    border: 1px solid var(--line);
+    color: var(--cream);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-family:'Inter',sans-serif;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    cursor:pointer;
+    white-space:nowrap;
+    transition: border-color 0.15s ease;
+  }
+  .overview-btn:hover{ border-color: var(--gold); color: var(--gold); }
+
+  /* Overview modal */
+  .overview-modal{
+    display:none;
+    position:fixed; inset:0;
+    background: rgba(8,26,18,0.82);
+    backdrop-filter: blur(3px);
+    z-index: 50;
+    align-items:flex-start;
+    justify-content:center;
+    padding: 40px 16px;
+    overflow-y:auto;
+  }
+  .overview-modal.active{ display:flex; }
+  .overview-panel{
+    width:100%; max-width: 540px;
+    background: var(--green);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 16px;
+    padding: 26px 24px 24px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+  }
+  .overview-panel-head{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:4px;
+  }
+  .overview-panel-title{
+    font-family:'Playfair Display', serif; font-weight:700; font-size:1.15rem;
+  }
+  .overview-close{
+    background:none; border:none; color: var(--cream); opacity:0.6;
+    font-size:1rem; cursor:pointer; padding:4px;
+  }
+  .overview-close:hover{ opacity:1; }
+  .overview-panel-sub{ font-size:0.8rem; opacity:0.6; margin-bottom:20px; }
+  .overview-dim-block{ margin-bottom: 18px; }
+  .overview-dim-label{
+    font-size:0.78rem; opacity:0.65; margin-bottom:8px; display:flex; justify-content:space-between;
+  }
+  .overview-item-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+    gap: 6px;
+  }
+  .overview-cell{
+    aspect-ratio: 1;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.62rem;
+    opacity:0.4;
+  }
+  .overview-cell.done{ background: rgba(201,168,76,0.25); border-color: var(--gold); color:var(--gold); opacity:1; }
+  .overview-cell.current{ border-color: var(--gold); box-shadow: 0 0 0 2px rgba(201,168,76,0.25); opacity:1; animation: pulse 1.6s ease-in-out infinite; }
+  .overview-legend{
+    display:flex; gap:18px; margin-top:18px; font-size:0.72rem; opacity:0.65; flex-wrap:wrap;
+  }
+  .overview-legend .dot{ display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:5px; vertical-align:middle; }
+  .overview-legend .dot.done{ background: var(--gold); }
+  .overview-legend .dot.current{ background:transparent; border:1px solid var(--gold); }
+  .overview-legend .dot.upcoming{ background:transparent; border:1px solid var(--line); }
 
   /* ---------- Screens ---------- */
   .screen{ display:none; flex:1; flex-direction:column; }
@@ -183,6 +263,29 @@
   .login-foot-note{
     text-align:center; font-size:0.72rem; opacity:0.45; margin-top:22px; line-height:1.5;
   }
+  .instructions-block{ margin-bottom: 4px; }
+  .instructions-title{
+    font-size:0.78rem; opacity:0.6; margin-bottom: 12px; letter-spacing:0.01em;
+  }
+  .instructions-list{
+    list-style:none; margin:0; padding:0;
+    display:flex; flex-direction:column; gap:11px;
+  }
+  .instructions-list li{
+    font-size: 0.85rem;
+    line-height: 1.55;
+    opacity: 0.8;
+    padding-left: 18px;
+    position:relative;
+  }
+  .instructions-list li::before{
+    content:"";
+    position:absolute; left:0; top:8px;
+    width:5px; height:5px;
+    border-radius:50%;
+    background: var(--gold);
+  }
+  .instructions-list li b{ color: var(--cream); opacity:1; font-weight:600; }
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
@@ -281,7 +384,9 @@
     transition: border-color 0.15s ease, background 0.15s ease;
   }
   .option:hover{ border-color: var(--gold); background: rgba(201,168,76,0.08); }
+  .option.picked{ border-color: var(--gold); background: rgba(201,168,76,0.06); }
   .option.selected{ border-color: var(--gold); background: var(--gold-soft); }
+  .option.selected.locked{ pointer-events:none; }
   .option .opt-letter{
     display:inline-block; width: 20px; opacity:0.5; font-size:0.85rem;
   }
@@ -300,7 +405,11 @@
   }
   .likert-opt .num{ display:block; font-family:'Playfair Display', serif; font-size:1.3rem; margin-bottom:4px; }
   .likert-opt:hover{ border-color: var(--gold); }
+  .likert-opt.picked{ border-color: var(--gold); background: rgba(201,168,76,0.06); }
   .likert-opt.selected{ border-color: var(--gold); background: var(--gold-soft); }
+
+  #submitAnswerBtn{ margin-bottom: 10px; }
+  #submitAnswerBtn:disabled{ opacity:0.35; }
 
   .locked-note{
     font-size:0.75rem; opacity:0.5; text-align:center; margin-top: 6px;
@@ -347,6 +456,11 @@
     line-height:1.5;
   }
 
+  .radar-wrap{
+    display:flex; justify-content:center;
+    margin-bottom: 22px;
+    padding: 10px 0 4px;
+  }
   .dim-bars{ margin-bottom: 30px; }
   .dim-bar-row{ margin-bottom: 16px; }
   .dim-bar-label{
@@ -402,10 +516,33 @@
 
   <!-- Progress bar (hidden on landing/results) -->
   <div id="progressBlock" style="display:none;">
-    <div class="progress-shell"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+    <div class="progress-top-row">
+      <div class="progress-shell"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+      <button class="overview-btn" id="overviewBtn" title="View all questions">
+        <span id="overviewCount">0/26</span>
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="0.5" y="0.5" width="5" height="5" rx="1" stroke="currentColor"/><rect x="7.5" y="0.5" width="5" height="5" rx="1" stroke="currentColor"/><rect x="0.5" y="7.5" width="5" height="5" rx="1" stroke="currentColor"/><rect x="7.5" y="7.5" width="5" height="5" rx="1" stroke="currentColor"/></svg>
+      </button>
+    </div>
     <div class="progress-label">
       <span id="progressDim">Academic Readiness</span>
       <span id="progressCount">1 / 12</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW MODAL -->
+  <div class="overview-modal" id="overviewModal">
+    <div class="overview-panel">
+      <div class="overview-panel-head">
+        <div class="overview-panel-title">Assessment Overview</div>
+        <button class="overview-close" id="overviewCloseBtn">✕</button>
+      </div>
+      <div class="overview-panel-sub" id="overviewSub">14 of 26 questions completed</div>
+      <div id="overviewGrid"></div>
+      <div class="overview-legend">
+        <span><i class="dot done"></i> Answered</span>
+        <span><i class="dot current"></i> Current</span>
+        <span><i class="dot upcoming"></i> Not yet reached</span>
+      </div>
     </div>
   </div>
 
@@ -422,6 +559,20 @@
         <div class="dim-chip"><b>Occupational</b><span>Aptitude &amp; trade fit</span></div>
         <div class="dim-chip"><b>Germany Readiness</b><span>Language, culture, life, law</span></div>
         <div class="dim-chip"><b>Employability</b><span>Work habits &amp; behaviour</span></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="instructions-block">
+        <div class="instructions-title">Before you begin</div>
+        <ul class="instructions-list">
+          <li><b>Format.</b> One question at a time, across four sections. You'll review each answer before submitting it.</li>
+          <li><b>No going back.</b> Once you submit an answer, it's final — you can't return to change it.</li>
+          <li><b>Timed, not rushed.</b> Each question shows a running timer so we can see how long you take — there's no countdown or cutoff, so take the time you need.</li>
+          <li><b>Save &amp; resume.</b> Your progress saves after every question. Close the tab any time and resume later with your email — your session stays open for 14 days.</li>
+          <li><b>Length.</b> This sample section takes roughly 12–15 minutes.</li>
+          <li><b>Result.</b> On completion, you'll see your readiness band and a downloadable report immediately.</li>
+        </ul>
       </div>
 
       <div class="divider"></div>
@@ -477,7 +628,8 @@
     <div class="q-prompt" id="qPrompt"></div>
     <div class="options" id="qOptions"></div>
     <div class="likert-row" id="qLikert" style="display:none;"></div>
-    <div class="locked-note">Once you answer, you can't go back to change it.</div>
+    <button class="btn" id="submitAnswerBtn" disabled>Submit Answer</button>
+    <div class="locked-note">Once submitted, an answer is final — there's no going back.</div>
   </div>
 
   <!-- RESULTS -->
@@ -490,6 +642,7 @@
     </div>
 
     <div class="section-title">By dimension</div>
+    <div class="radar-wrap" id="radarWrap"></div>
     <div class="dim-bars" id="dimBars"></div>
 
     <div class="section-title">Trade clusters that fit your profile</div>
@@ -868,6 +1021,50 @@ function updateProgress(){
   document.getElementById("progressFill").style.width = Math.round((done/total)*100) + "%";
   document.getElementById("progressDim").textContent = DIMENSIONS[state.currentDim].name;
   document.getElementById("progressCount").textContent = `${done} / ${total}`;
+  document.getElementById("overviewCount").textContent = `${done}/${total}`;
+}
+
+// ---------- Overview modal ----------
+document.getElementById("overviewBtn").addEventListener("click", () => renderOverview(true));
+document.getElementById("overviewCloseBtn").addEventListener("click", () => {
+  document.getElementById("overviewModal").classList.remove("active");
+});
+document.getElementById("overviewModal").addEventListener("click", (e) => {
+  if(e.target.id === "overviewModal") e.currentTarget.classList.remove("active");
+});
+
+function renderOverview(open){
+  const done = Object.keys(state.responses).length;
+  const total = flatItems.length;
+  document.getElementById("overviewSub").textContent = `${done} of ${total} questions completed`;
+
+  const grid = document.getElementById("overviewGrid");
+  grid.innerHTML = "";
+  DIMENSIONS.forEach((d, di) => {
+    const dimDone = d.items.filter(it => state.responses[it.id]).length;
+    const block = document.createElement("div");
+    block.className = "overview-dim-block";
+    const label = document.createElement("div");
+    label.className = "overview-dim-label";
+    label.innerHTML = `<span>${d.name}</span><span>${dimDone}/${d.items.length}</span>`;
+    block.appendChild(label);
+    const cellGrid = document.createElement("div");
+    cellGrid.className = "overview-item-grid";
+    d.items.forEach((it, ii) => {
+      const cell = document.createElement("div");
+      cell.className = "overview-cell";
+      const isDone = !!state.responses[it.id];
+      const isCurrent = di === state.currentDim && ii === state.currentItem && !state.complete;
+      if(isDone){ cell.classList.add("done"); cell.textContent = "✓"; }
+      else if(isCurrent){ cell.classList.add("current"); cell.textContent = String(ii+1); }
+      else { cell.textContent = String(ii+1); }
+      cellGrid.appendChild(cell);
+    });
+    block.appendChild(cellGrid);
+    grid.appendChild(block);
+  });
+
+  if(open) document.getElementById("overviewModal").classList.add("active");
 }
 
 // ---------- Landing ----------
@@ -1012,6 +1209,17 @@ function renderQuestion(){
   optWrap.innerHTML = "";
   likertWrap.innerHTML = "";
 
+  pendingSelection = null;
+  const submitBtn = document.getElementById("submitAnswerBtn");
+  submitBtn.disabled = true;
+
+  function selectOption(idx, el, container){
+    Array.from(container.children).forEach(c => c.classList.remove("picked"));
+    el.classList.add("picked");
+    pendingSelection = idx;
+    submitBtn.disabled = false;
+  }
+
   if(item.type === "mcq" || item.type === "forced-choice"){
     likertWrap.style.display = "none";
     optWrap.style.display = "flex";
@@ -1020,7 +1228,7 @@ function renderQuestion(){
       const btn = document.createElement("button");
       btn.className = "option";
       btn.innerHTML = `<span class="opt-letter">${letters[idx]}</span>${opt}`;
-      btn.addEventListener("click", () => answerItem(item, idx, btn, optWrap));
+      btn.addEventListener("click", () => selectOption(idx, btn, optWrap));
       optWrap.appendChild(btn);
     });
   } else if(item.type === "likert"){
@@ -1030,7 +1238,7 @@ function renderQuestion(){
       const div = document.createElement("div");
       div.className = "likert-opt";
       div.innerHTML = `<span class="num">${idx+1}</span>${label}`;
-      div.addEventListener("click", () => answerItem(item, idx, div, likertWrap));
+      div.addEventListener("click", () => selectOption(idx, div, likertWrap));
       likertWrap.appendChild(div);
     });
   }
@@ -1048,28 +1256,39 @@ function renderQuestion(){
   }
 }
 
-function answerItem(item, selectedIdx, el, container){
-  // lock immediately — no re-answer
-  Array.from(container.children).forEach(c => c.style.pointerEvents = "none");
-  el.classList.add("selected");
+let pendingSelection = null;
+
+document.getElementById("submitAnswerBtn").addEventListener("click", () => {
+  if(pendingSelection === null) return;
+  const d = DIMENSIONS[state.currentDim];
+  const item = d.items[state.currentItem];
+  const container = (item.type === "likert") ? document.getElementById("qLikert") : document.getElementById("qOptions");
+
+  // lock visuals — no re-answer
+  Array.from(container.children).forEach((c, idx) => {
+    c.style.pointerEvents = "none";
+    if(idx === pendingSelection) c.classList.add("selected", "locked");
+  });
+  document.getElementById("submitAnswerBtn").disabled = true;
+
   const timeSpent = stopQuestionTimer();
 
   let score = 0;
   if(item.type === "mcq"){
-    score = (selectedIdx === item.correct) ? item.weight : 0;
+    score = (pendingSelection === item.correct) ? item.weight : 0;
   } else if(item.type === "likert"){
-    let v = selectedIdx; // 0-4
+    let v = pendingSelection; // 0-4
     if(item.reverse) v = 4 - v;
     score = (v/4) * item.weight;
   } else if(item.type === "forced-choice"){
     score = item.weight; // scored into interest profile, not right/wrong — full pt for signal captured
   }
 
-  state.responses[item.id] = { raw: selectedIdx, score: score, dimId: DIMENSIONS[state.currentDim].id, timeSpent: timeSpent };
+  state.responses[item.id] = { raw: pendingSelection, score: score, dimId: DIMENSIONS[state.currentDim].id, timeSpent: timeSpent };
   saveState();
 
-  setTimeout(() => advance(), 380);
-}
+  setTimeout(() => advance(), 420);
+});
 
 function advance(){
   const d = DIMENSIONS[state.currentDim];
@@ -1111,6 +1330,52 @@ function computeDimensionScores(){
   return out;
 }
 
+function buildRadarSVG(dimScores){
+  const cx = 150, cy = 150, R = 105;
+  const labels = ["Academic", "Occupational", "Germany", "Employability"];
+  const n = DIMENSIONS.length;
+  const angleFor = i => (-90 + (360/n)*i) * Math.PI/180;
+
+  const rings = [0.25, 0.5, 0.75, 1].map(f => {
+    const pts = DIMENSIONS.map((d,i) => {
+      const a = angleFor(i);
+      return `${cx + Math.cos(a)*R*f},${cy + Math.sin(a)*R*f}`;
+    }).join(" ");
+    return `<polygon points="${pts}" fill="none" stroke="rgba(245,240,232,0.14)" stroke-width="1"/>`;
+  }).join("");
+
+  const axes = DIMENSIONS.map((d,i) => {
+    const a = angleFor(i);
+    const x = cx + Math.cos(a)*R, y = cy + Math.sin(a)*R;
+    return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(245,240,232,0.14)" stroke-width="1"/>`;
+  }).join("");
+
+  const dataPts = DIMENSIONS.map((d,i) => {
+    const a = angleFor(i);
+    const pct = dimScores[d.id].earned / dimScores[d.id].max;
+    return { x: cx + Math.cos(a)*R*pct, y: cy + Math.sin(a)*R*pct, pct };
+  });
+  const dataPolygon = dataPts.map(p => `${p.x},${p.y}`).join(" ");
+  const dots = dataPts.map(p => `<circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#C9A84C"/>`).join("");
+
+  const labelEls = DIMENSIONS.map((d,i) => {
+    const a = angleFor(i);
+    const lx = cx + Math.cos(a)*(R+28), ly = cy + Math.sin(a)*(R+28);
+    const anchor = Math.abs(Math.cos(a)) < 0.3 ? "middle" : (Math.cos(a) > 0 ? "start" : "end");
+    const pct = Math.round((dimScores[d.id].earned/dimScores[d.id].max)*100);
+    return `<text x="${lx}" y="${ly-4}" text-anchor="${anchor}" font-family="Inter, Arial, sans-serif" font-size="10.5" fill="#F5F0E8" opacity="0.85">${labels[i]}</text>
+            <text x="${lx}" y="${ly+11}" text-anchor="${anchor}" font-family="Georgia, serif" font-size="13" font-weight="700" fill="#C9A84C">${pct}%</text>`;
+  }).join("");
+
+  return `<svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+    ${rings}
+    ${axes}
+    <polygon points="${dataPolygon}" fill="rgba(201,168,76,0.22)" stroke="#C9A84C" stroke-width="2"/>
+    ${dots}
+    ${labelEls}
+  </svg>`;
+}
+
 function renderResults(){
   const dimScores = computeDimensionScores();
   let total = 0;
@@ -1145,6 +1410,9 @@ function renderResults(){
   // dimension bars
   const barsEl = document.getElementById("dimBars");
   barsEl.innerHTML = "";
+
+  document.getElementById("radarWrap").innerHTML = buildRadarSVG(dimScores);
+
   const narratives = {
     academic: { high: "Strong learning and academic foundation.", low: "Consider extra support with core study skills before starting." },
     occupational: { high: "Clear aptitude signal for hands-on and technical work.", low: "Aptitude profile is still forming — worth exploring more trade options." },
@@ -1318,6 +1586,9 @@ function buildReportHTML(){
     <div class="score">Overall score: ${total} / 100</div>
     ${flagged ? `<div class="flag"><b>Germany Readiness Gap flagged.</b> Score in this dimension fell below the recommended threshold. A focused Germany Readiness module — legal, financial, and daily-life preparation — is recommended before proceeding, regardless of overall score.</div>` : ""}
   </div>
+
+  <h2 class="section">Readiness profile</h2>
+  <div style="display:flex; justify-content:center; margin-bottom:10px;">${buildRadarSVG(dimScores)}</div>
 
   <h2 class="section">Dimension breakdown</h2>
   <table>${dimRows}</table>
