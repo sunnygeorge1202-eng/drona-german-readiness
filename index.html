@@ -41,7 +41,7 @@
   }
   a{color:inherit;}
 
-  /* ---------- Top bar / progress ---------- */
+  /* ---------- Top bar ---------- */
   .topbar{
     display:flex; align-items:center; justify-content:space-between;
     margin-bottom: 30px;
@@ -56,9 +56,7 @@
     gap:9px;
   }
   .brand .gold{ color: var(--gold); }
-  .topbar-logo{
-    width: 26px; height:26px; object-fit:contain;
-  }
+  .topbar-logo{ width: 26px; height:26px; object-fit:contain; }
   .expiry-pill{
     font-size: 0.72rem;
     color: var(--cream);
@@ -68,121 +66,6 @@
     border-radius: 20px;
   }
   .expiry-pill.warn{ color: var(--danger); border-color: rgba(196,103,74,0.5); opacity:1; }
-
-  .progress-shell{
-    height: 4px;
-    width:100%;
-    background: rgba(245,240,232,0.1);
-    border-radius: 4px;
-    overflow:hidden;
-    margin-top: 16px;
-  }
-  .progress-fill{
-    height:100%;
-    background: var(--gold);
-    transition: width 0.4s ease;
-  }
-  .progress-label{
-    display:flex; justify-content:space-between;
-    font-size:0.78rem;
-    opacity:0.7;
-    margin-top:8px;
-  }
-  .progress-top-row{
-    display:flex; align-items:center; gap:12px; margin-top:16px;
-  }
-  .progress-top-row .progress-shell{ margin-top:0; flex:1; }
-  .overview-btn{
-    display:flex; align-items:center; gap:7px;
-    background: rgba(245,240,232,0.06);
-    border: 1px solid var(--line);
-    color: var(--cream);
-    border-radius: 8px;
-    padding: 6px 10px;
-    font-family:'Inter',sans-serif;
-    font-size: 0.75rem;
-    font-variant-numeric: tabular-nums;
-    cursor:pointer;
-    white-space:nowrap;
-    transition: border-color 0.15s ease;
-  }
-  .overview-btn:hover{ border-color: var(--gold); color: var(--gold); }
-
-  /* Overview modal */
-  .overview-modal{
-    display:none;
-    position:fixed; inset:0;
-    background: rgba(8,26,18,0.82);
-    backdrop-filter: blur(3px);
-    z-index: 50;
-    align-items:flex-start;
-    justify-content:center;
-    padding: 40px 16px;
-    overflow-y:auto;
-  }
-  .overview-modal.active{ display:flex; }
-  .overview-panel{
-    width:100%; max-width: 540px;
-    background: var(--green);
-    border: 1px solid rgba(201,168,76,0.35);
-    border-radius: 16px;
-    padding: 26px 24px 24px;
-    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
-  }
-  .overview-panel-head{
-    display:flex; justify-content:space-between; align-items:center;
-    margin-bottom:4px;
-  }
-  .overview-panel-title{
-    font-family:'Playfair Display', serif; font-weight:700; font-size:1.15rem;
-  }
-  .overview-close{
-    background:none; border:none; color: var(--cream); opacity:0.6;
-    font-size:1rem; cursor:pointer; padding:4px;
-  }
-  .overview-close:hover{ opacity:1; }
-  .overview-panel-sub{ font-size:0.8rem; opacity:0.6; margin-bottom:20px; }
-  .overview-dim-block{ margin-bottom: 18px; }
-  .overview-dim-label{
-    font-size:0.78rem; opacity:0.65; margin-bottom:8px; display:flex; justify-content:space-between;
-  }
-  .overview-item-grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
-    gap: 6px;
-  }
-  .overview-cell{
-    aspect-ratio: 1;
-    border-radius: 6px;
-    border: 1px solid var(--line);
-    display:flex; align-items:center; justify-content:center;
-    font-size:0.62rem;
-    opacity:0.4;
-  }
-  .overview-cell.done{ background: rgba(201,168,76,0.25); border-color: var(--gold); color:var(--gold); opacity:1; }
-  .overview-cell.current{ border-color: var(--gold); box-shadow: 0 0 0 2px rgba(201,168,76,0.25); opacity:1; animation: pulse 1.6s ease-in-out infinite; }
-  .overview-legend{
-    display:flex; gap:18px; margin-top:18px; font-size:0.72rem; opacity:0.65; flex-wrap:wrap;
-  }
-  .overview-legend .dot{ display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:5px; vertical-align:middle; }
-  .overview-legend .dot.done{ background: var(--gold); }
-  .overview-legend .dot.current{ background:transparent; border:1px solid var(--gold); }
-  .overview-legend .dot.upcoming{ background:transparent; border:1px solid var(--line); }
-  .overview-start-btn{
-    background: rgba(201,168,76,0.12);
-    border: 1px solid rgba(201,168,76,0.4);
-    color: var(--gold);
-    border-radius: 8px;
-    padding: 9px 14px;
-    font-family:'Inter',sans-serif;
-    font-size: 0.82rem;
-    font-weight:600;
-    cursor:pointer;
-    width:100%;
-    margin-top: 4px;
-    transition: background 0.15s ease;
-  }
-  .overview-start-btn:hover{ background: rgba(201,168,76,0.22); }
 
   /* ---------- Screens ---------- */
   .screen{ display:none; flex:1; flex-direction:column; }
@@ -195,15 +78,9 @@
       radial-gradient(ellipse 700px 500px at 100% 100%, rgba(201,168,76,0.06), transparent 60%),
       var(--green-deep);
   }
-  #screen-landing{
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    flex:1;
-  }
+  #screen-landing{ justify-content:center; align-items:center; text-align:center; flex:1; }
   .login-card{
-    width:100%;
-    max-width: 440px;
+    width:100%; max-width: 440px;
     border: 1px solid rgba(201,168,76,0.35);
     border-radius: 18px;
     padding: 44px 36px 36px;
@@ -211,118 +88,42 @@
     box-shadow: 0 30px 60px -25px rgba(0,0,0,0.6), 0 0 0 1px rgba(245,240,232,0.03) inset;
     text-align:left;
   }
-  .login-mark-logo{
-    display:block;
-    width: 64px; height:64px;
-    object-fit:contain;
-    margin: 0 auto 18px;
-  }
-  .login-eyebrow{
-    text-align:center;
-    font-size:0.78rem;
-    opacity:0.55;
-    margin-bottom: 8px;
-    letter-spacing: 0.03em;
-  }
-  #screen-landing h1{
-    font-size: 1.7rem;
-    line-height:1.3;
-    margin-bottom: 10px;
-    text-align:center;
-  }
-  #screen-landing p.lede{
-    font-size:0.92rem;
-    line-height:1.6;
-    opacity:0.7;
-    text-align:center;
-    margin: 0 auto 28px;
-    max-width: 38ch;
-  }
-  .divider{
-    height:1px;
-    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
-    margin: 26px 0 24px;
-  }
-  .dim-list{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:10px;
-    margin-bottom: 8px;
-  }
-  .dim-chip{
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding: 12px 14px;
-    font-size:0.85rem;
-  }
+  .login-mark-logo{ display:block; width: 64px; height:64px; object-fit:contain; margin: 0 auto 18px; }
+  .login-eyebrow{ text-align:center; font-size:0.78rem; opacity:0.55; margin-bottom: 8px; letter-spacing: 0.03em; }
+  #screen-landing h1{ font-size: 1.7rem; line-height:1.3; margin-bottom: 10px; text-align:center; }
+  #screen-landing p.lede{ font-size:0.92rem; line-height:1.6; opacity:0.7; text-align:center; margin: 0 auto 28px; max-width: 40ch; }
+  .divider{ height:1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent); margin: 26px 0 24px; }
+  .dim-list{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom: 8px; }
+  .dim-chip{ border:1px solid var(--line); border-radius:10px; padding: 12px 14px; font-size:0.85rem; }
   .dim-chip b{ display:block; font-size:0.95rem; margin-bottom:2px; }
   .dim-chip span{ opacity:0.65; font-size:0.78rem; }
 
   .field-group{ margin-bottom: 16px; }
-  label.field-label{
-    display:block; font-size:0.78rem; opacity:0.6; margin-bottom:7px;
-    letter-spacing:0.01em;
-  }
+  label.field-label{ display:block; font-size:0.78rem; opacity:0.6; margin-bottom:7px; letter-spacing:0.01em; }
   input[type=text], input[type=email]{
-    width:100%;
-    background: rgba(0,0,0,0.2);
-    border: 1px solid rgba(245,240,232,0.16);
-    border-radius: 9px;
-    color: var(--cream);
-    padding: 14px 15px;
-    font-size: 0.98rem;
-    font-family:'Inter',sans-serif;
+    width:100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(245,240,232,0.16);
+    border-radius: 9px; color: var(--cream); padding: 14px 15px; font-size: 0.98rem; font-family:'Inter',sans-serif;
   }
   input::placeholder{ color: rgba(245,240,232,0.35); }
   input:focus{ outline:none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.15); }
-  .login-foot-note{
-    text-align:center; font-size:0.72rem; opacity:0.45; margin-top:22px; line-height:1.5;
-  }
+  .login-foot-note{ text-align:center; font-size:0.72rem; opacity:0.45; margin-top:22px; line-height:1.5; }
+
   .instructions-block{ margin-bottom: 4px; }
-  .instructions-title{
-    font-size:0.78rem; opacity:0.6; margin-bottom: 12px; letter-spacing:0.01em;
-  }
-  .instructions-list{
-    list-style:none; margin:0; padding:0;
-    display:flex; flex-direction:column; gap:11px;
-  }
-  .instructions-list li{
-    font-size: 0.85rem;
-    line-height: 1.55;
-    opacity: 0.8;
-    padding-left: 18px;
-    position:relative;
-  }
-  .instructions-list li::before{
-    content:"";
-    position:absolute; left:0; top:8px;
-    width:5px; height:5px;
-    border-radius:50%;
-    background: var(--gold);
-  }
+  .instructions-title{ font-size:0.78rem; opacity:0.6; margin-bottom: 12px; letter-spacing:0.01em; }
+  .instructions-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px; }
+  .instructions-list li{ font-size: 0.85rem; line-height: 1.55; opacity: 0.8; padding-left: 18px; position:relative; }
+  .instructions-list li::before{ content:""; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background: var(--gold); }
   .instructions-list li b{ color: var(--cream); opacity:1; font-weight:600; }
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
-    background: var(--gold);
-    color: var(--green-deep);
-    border:none;
-    border-radius: 8px;
-    padding: 15px 22px;
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:1rem;
-    cursor:pointer;
-    width:100%;
-    transition: transform 0.15s ease, background 0.15s ease;
+    background: var(--gold); color: var(--green-deep); border:none; border-radius: 8px;
+    padding: 15px 22px; font-family:'Inter',sans-serif; font-weight:600; font-size:1rem;
+    cursor:pointer; width:100%; transition: transform 0.15s ease, background 0.15s ease;
   }
   .btn:hover{ background:#DDB95C; }
   .btn:active{ transform: scale(0.98); }
-  .btn.ghost{
-    background: transparent;
-    color: var(--cream);
-    border: 1px solid var(--line);
-  }
+  .btn.ghost{ background: transparent; color: var(--cream); border: 1px solid var(--line); }
   .btn.ghost:hover{ background: rgba(245,240,232,0.06); }
   .btn:disabled{ opacity:0.4; cursor:not-allowed; }
 
@@ -332,91 +133,84 @@
     cursor:pointer; text-decoration: underline; padding:0; font-family:'Inter',sans-serif;
   }
 
-  /* Dimension intro */
-  #screen-dimintro{ justify-content:center; }
-  .dim-intro-eyebrow{ font-size: 0.85rem; opacity:0.6; margin-bottom: 8px; }
-  #screen-dimintro h2{ font-size: 1.7rem; margin-bottom: 12px; }
-  #screen-dimintro p{ opacity:0.8; line-height:1.6; margin-bottom: 28px; }
-  .estimate{
-    display:flex; align-items:center; gap:8px;
-    font-size:0.85rem; opacity:0.65; margin-bottom:30px;
-  }
+  /* ---------- Grid Hub (question map) ---------- */
+  #screen-hub{ justify-content:flex-start; }
+  .hub-head{ margin-bottom: 22px; }
+  .hub-head h2{ font-size: 1.4rem; margin-bottom: 6px; }
+  .hub-head p{ font-size:0.85rem; opacity:0.65; margin:0; }
+  .hub-progress-shell{ height:6px; background: rgba(245,240,232,0.1); border-radius:4px; overflow:hidden; margin: 14px 0 6px; }
+  .hub-progress-fill{ height:100%; background: var(--gold); transition: width 0.4s ease; }
+  .hub-progress-label{ font-size:0.75rem; opacity:0.55; margin-bottom:24px; }
 
-  /* Question screen */
-  #screen-question{ justify-content:flex-start; padding-top: 6px;}
-  .q-meta-row{
-    display:flex; align-items:center; justify-content:space-between;
-    margin-bottom: 10px;
+  .hub-dim-block{ margin-bottom: 26px; }
+  .hub-dim-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px; }
+  .hub-dim-head b{ font-size:0.98rem; }
+  .hub-dim-head span{ font-size:0.78rem; opacity:0.55; }
+  .hub-dim-desc{ font-size:0.78rem; opacity:0.55; margin-bottom:12px; line-height:1.5; }
+  .hub-cell-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(42px, 1fr)); gap: 8px; }
+  .hub-cell{
+    aspect-ratio: 1;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.8rem; font-weight:600;
+    cursor:pointer;
+    background: rgba(245,240,232,0.04);
+    transition: border-color 0.15s ease, transform 0.1s ease;
   }
+  .hub-cell:hover{ border-color: var(--gold); transform: translateY(-1px); }
+  .hub-cell.done{
+    background: rgba(201,168,76,0.18); border-color: var(--gold); color: var(--gold);
+    cursor: default;
+  }
+  .hub-cell.done:hover{ transform:none; }
+
+  .hub-legend{ display:flex; gap:18px; font-size:0.72rem; opacity:0.6; margin: 8px 0 28px; flex-wrap:wrap; }
+  .hub-legend .dot{ display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:5px; vertical-align:middle; }
+  .hub-legend .dot.done{ background: var(--gold); }
+  .hub-legend .dot.upcoming{ background:transparent; border:1px solid var(--line); }
+
+  .hub-cta-note{ font-size:0.82rem; opacity:0.6; text-align:center; margin-bottom:12px; }
+
+  /* ---------- Question screen ---------- */
+  #screen-question{ justify-content:flex-start; padding-top: 6px;}
+  .q-meta-row{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 10px; }
   .q-meta{ font-size:0.78rem; opacity:0.55; }
   .q-timer{
-    display:flex; align-items:center; gap:7px;
-    font-family:'Playfair Display', serif;
-    font-size: 0.95rem;
-    color: var(--gold);
-    background: rgba(201,168,76,0.08);
-    border: 1px solid rgba(201,168,76,0.3);
-    padding: 4px 11px 4px 9px;
-    border-radius: 20px;
-    font-variant-numeric: tabular-nums;
+    display:flex; align-items:center; gap:7px; font-family:'Playfair Display', serif; font-size: 0.95rem;
+    color: var(--gold); background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3);
+    padding: 4px 11px 4px 9px; border-radius: 20px; font-variant-numeric: tabular-nums;
   }
-  .timer-dot{
-    width:6px; height:6px; border-radius:50%;
-    background: var(--gold);
-    animation: pulse 1.6s ease-in-out infinite;
+  .timer-dot{ width:6px; height:6px; border-radius:50%; background: var(--gold); animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
+
+  .back-to-hub{
+    background:none; border:none; color: var(--cream); opacity:0.55; font-size:0.78rem;
+    cursor:pointer; padding:0; margin-bottom:14px; text-align:left; font-family:'Inter',sans-serif;
+    text-decoration:underline;
   }
-  @keyframes pulse{
-    0%,100%{ opacity:1; } 50%{ opacity:0.35; }
-  }
+
   .q-stimulus{
-    background: rgba(245,240,232,0.05);
-    border-left: 3px solid var(--gold);
-    padding: 14px 16px;
-    border-radius: 6px;
-    font-size:0.92rem;
-    line-height:1.55;
-    margin-bottom: 20px;
-    opacity: 0.92;
+    background: rgba(245,240,232,0.05); border-left: 3px solid var(--gold); padding: 14px 16px;
+    border-radius: 6px; font-size:0.92rem; line-height:1.55; margin-bottom: 20px; opacity: 0.92;
   }
-  .q-prompt{
-    font-size: 1.2rem;
-    line-height:1.45;
-    margin-bottom: 22px;
-    font-weight:500;
-  }
+  .q-prompt{ font-size: 1.2rem; line-height:1.45; margin-bottom: 22px; font-weight:500; }
   .options{ display:flex; flex-direction:column; gap:10px; margin-bottom: 20px;}
   .option{
-    text-align:left;
-    background: rgba(245,240,232,0.04);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 14px 16px;
-    font-size: 0.98rem;
-    color: var(--cream);
-    cursor:pointer;
-    font-family:'Inter',sans-serif;
-    line-height:1.4;
-    transition: border-color 0.15s ease, background 0.15s ease;
+    text-align:left; background: rgba(245,240,232,0.04); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 16px; font-size: 0.98rem; color: var(--cream); cursor:pointer; font-family:'Inter',sans-serif;
+    line-height:1.4; transition: border-color 0.15s ease, background 0.15s ease;
   }
   .option:hover{ border-color: var(--gold); background: rgba(201,168,76,0.08); }
   .option.picked{ border-color: var(--gold); background: rgba(201,168,76,0.06); }
   .option.selected{ border-color: var(--gold); background: var(--gold-soft); }
   .option.selected.locked{ pointer-events:none; }
-  .option .opt-letter{
-    display:inline-block; width: 20px; opacity:0.5; font-size:0.85rem;
-  }
+  .option .opt-letter{ display:inline-block; width: 20px; opacity:0.5; font-size:0.85rem; }
 
   .likert-row{ display:flex; gap:8px; margin-bottom:20px; }
   .likert-opt{
-    flex:1;
-    text-align:center;
-    padding: 14px 4px 10px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    cursor:pointer;
-    font-size: 0.72rem;
-    line-height:1.3;
-    background: rgba(245,240,232,0.04);
+    flex:1; text-align:center; padding: 14px 4px 10px; border: 1px solid var(--line); border-radius: 10px;
+    cursor:pointer; font-size: 0.72rem; line-height:1.3; background: rgba(245,240,232,0.04);
   }
   .likert-opt .num{ display:block; font-family:'Playfair Display', serif; font-size:1.3rem; margin-bottom:4px; }
   .likert-opt:hover{ border-color: var(--gold); }
@@ -425,122 +219,85 @@
 
   #submitAnswerBtn{ margin-bottom: 10px; }
   #submitAnswerBtn:disabled{ opacity:0.35; }
+  .locked-note{ font-size:0.75rem; opacity:0.5; text-align:center; margin-top: 6px; }
 
-  .locked-note{
-    font-size:0.75rem; opacity:0.5; text-align:center; margin-top: 6px;
-  }
-
-  /* Resume banner */
   .banner{
-    border:1px solid var(--gold);
-    background: var(--gold-soft);
-    border-radius: 10px;
-    padding: 14px 16px;
-    font-size: 0.85rem;
-    margin-bottom: 20px;
-    line-height:1.5;
+    border:1px solid var(--gold); background: var(--gold-soft); border-radius: 10px;
+    padding: 14px 16px; font-size: 0.85rem; margin-bottom: 20px; line-height:1.5;
   }
 
-  /* Results */
+  /* ---------- Results ---------- */
   #screen-results{ justify-content:flex-start; }
   .band-card{
-    text-align:center;
-    padding: 34px 20px 30px;
-    border: 1px solid var(--gold);
-    border-radius: 14px;
-    background: linear-gradient(180deg, rgba(201,168,76,0.12), rgba(201,168,76,0.02));
-    margin-bottom: 26px;
+    text-align:center; padding: 34px 20px 30px; border: 1px solid var(--gold); border-radius: 14px;
+    background: linear-gradient(180deg, rgba(201,168,76,0.12), rgba(201,168,76,0.02)); margin-bottom: 26px;
   }
-  .band-name{
-    font-family:'Playfair Display', serif;
-    font-weight:700;
-    font-size: 1.9rem;
-    color: var(--gold);
-    margin-bottom: 6px;
-  }
+  .band-name{ font-family:'Playfair Display', serif; font-weight:700; font-size: 1.9rem; color: var(--gold); margin-bottom: 6px; }
   .band-score{ font-size:0.95rem; opacity:0.75; }
   .flag-note{
-    margin-top:14px;
-    font-size:0.8rem;
-    color: var(--danger);
-    background: rgba(196,103,74,0.12);
-    border: 1px solid rgba(196,103,74,0.4);
-    border-radius: 8px;
-    padding: 10px 12px;
-    text-align:left;
-    line-height:1.5;
+    margin-top:14px; font-size:0.8rem; color: var(--danger); background: rgba(196,103,74,0.12);
+    border: 1px solid rgba(196,103,74,0.4); border-radius: 8px; padding: 10px 12px; text-align:left; line-height:1.5;
   }
 
-  .radar-wrap{
-    display:flex; justify-content:center;
-    margin-bottom: 22px;
-    padding: 10px 0 4px;
-  }
   .heatmap{ margin-bottom: 8px; }
   .heat-row{ margin-bottom: 16px; }
-  .heat-row-label{
-    display:flex; justify-content:space-between;
-    font-size:0.85rem; opacity:0.8; margin-bottom:7px;
-  }
+  .heat-row-label{ display:flex; justify-content:space-between; font-size:0.85rem; opacity:0.8; margin-bottom:7px; }
   .heat-row-label b{ font-weight:600; }
   .heat-row-pct{ font-family:'Playfair Display', serif; color: var(--gold); font-weight:700; }
   .heat-row-cells{ display:flex; gap:4px; }
-  .heat-cell{
-    flex:1; min-width:8px; height:24px; border-radius:5px;
-    transition: transform 0.15s ease;
-  }
-  .heat-cell:hover{ transform: scaleY(1.15); }
-  .heat-legend{
-    display:flex; align-items:center; gap:10px;
-    font-size:0.7rem; opacity:0.55; margin-top:14px; margin-bottom:24px;
-  }
-  .heat-legend-bar{
-    flex:1; max-width:140px; height:6px; border-radius:4px;
-    background: linear-gradient(90deg, hsl(6,60%,38%), hsl(45,65%,58%));
-  }
+  .heat-cell{ flex:1; min-width:8px; height:26px; border-radius:5px; cursor:pointer; transition: transform 0.15s ease, outline 0.15s ease; }
+  .heat-cell:hover{ transform: scaleY(1.18); outline: 2px solid rgba(245,240,232,0.4); }
+  .heat-hint{ font-size:0.7rem; opacity:0.45; margin: 6px 0 14px; text-align:center; }
+  .heat-legend{ display:flex; align-items:center; gap:10px; font-size:0.7rem; opacity:0.55; margin-top:14px; margin-bottom:24px; }
+  .heat-legend-bar{ flex:1; max-width:140px; height:6px; border-radius:4px; background: linear-gradient(90deg, hsl(6,60%,38%), hsl(45,65%,58%)); }
+
   .dim-bars{ margin-bottom: 30px; }
   .dim-bar-row{ margin-bottom: 16px; }
-  .dim-bar-label{
-    display:flex; justify-content:space-between;
-    font-size:0.85rem; margin-bottom:6px;
-  }
+  .dim-bar-label{ display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:6px; }
   .dim-bar-label b{ font-weight:600; }
-  .dim-bar-shell{
-    height:8px; background: rgba(245,240,232,0.08); border-radius:4px; overflow:hidden;
-  }
+  .dim-bar-shell{ height:8px; background: rgba(245,240,232,0.08); border-radius:4px; overflow:hidden; }
   .dim-bar-fill{ height:100%; background: var(--gold); border-radius:4px; }
   .dim-bar-fill.low{ background: var(--danger); }
   .dim-narrative{ font-size:0.78rem; opacity:0.65; margin-top:6px; line-height:1.5; }
 
   .clusters{ margin-bottom:30px; }
   .cluster-row{
-    display:flex; justify-content:space-between; align-items:center;
-    padding: 12px 14px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    margin-bottom: 8px;
-    font-size:0.9rem;
+    display:flex; justify-content:space-between; align-items:center; padding: 12px 14px;
+    border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; font-size:0.9rem;
   }
   .cluster-fit{ color: var(--gold); font-weight:600; font-family:'Playfair Display', serif; }
 
-  .section-title{
-    font-size:0.78rem;
-    text-transform: none;
-    opacity:0.55;
-    margin-bottom: 12px;
-    letter-spacing: 0.01em;
-  }
+  .section-title{ font-size:0.78rem; opacity:0.55; margin-bottom: 12px; letter-spacing: 0.01em; }
 
-  footer.foot{
-    text-align:center;
-    font-size:0.72rem;
-    opacity:0.4;
-    margin-top: 30px;
-  }
+  footer.foot{ text-align:center; font-size:0.72rem; opacity:0.4; margin-top: 30px; }
 
-  @media (prefers-reduced-motion: reduce){
-    *{ transition:none !important; }
+  /* ---------- Modal (item detail drill-down) ---------- */
+  .modal-overlay{
+    display:none; position:fixed; inset:0; background: rgba(8,26,18,0.82); backdrop-filter: blur(3px);
+    z-index: 50; align-items:flex-start; justify-content:center; padding: 40px 16px; overflow-y:auto;
   }
+  .modal-overlay.active{ display:flex; }
+  .modal-panel{
+    width:100%; max-width: 460px; background: var(--green); border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 16px; padding: 26px 24px 24px; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+  }
+  .modal-head{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; gap:10px; }
+  .modal-title{ font-family:'Playfair Display', serif; font-weight:700; font-size:1.1rem; }
+  .modal-close{ background:none; border:none; color: var(--cream); opacity:0.6; font-size:1rem; cursor:pointer; padding:4px; flex-shrink:0; }
+  .modal-close:hover{ opacity:1; }
+  .detail-meta{ font-size:0.75rem; opacity:0.55; margin-bottom:14px; }
+  .detail-prompt{ font-size:0.95rem; line-height:1.5; margin-bottom:16px; }
+  .detail-row{
+    display:flex; justify-content:space-between; padding:9px 0; border-top:1px solid var(--line); font-size:0.85rem;
+  }
+  .detail-row b{ font-weight:600; }
+  .detail-answer-box{
+    background: rgba(245,240,232,0.05); border-radius:8px; padding:12px 14px; margin: 4px 0 4px; font-size:0.88rem; line-height:1.5;
+  }
+  .detail-answer-box.correct{ border-left:3px solid var(--ok); }
+  .detail-answer-box.incorrect{ border-left:3px solid var(--danger); }
+
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
 </head>
 <body>
@@ -549,38 +306,6 @@
   <div class="topbar">
     <div class="brand"><img src="" id="topbarLogo" class="topbar-logo" alt="Dronafy"> <span class="brand-text">Drona <span class="gold">German Readiness</span></span></div>
     <div class="expiry-pill" id="expiryPill" style="display:none;"></div>
-  </div>
-
-  <!-- Progress bar (hidden on landing/results) -->
-  <div id="progressBlock" style="display:none;">
-    <div class="progress-top-row">
-      <div class="progress-shell"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
-      <button class="overview-btn" id="overviewBtn" title="View all questions">
-        <span id="overviewCount">0/26</span>
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="0.5" y="0.5" width="5" height="5" rx="1" stroke="currentColor"/><rect x="7.5" y="0.5" width="5" height="5" rx="1" stroke="currentColor"/><rect x="0.5" y="7.5" width="5" height="5" rx="1" stroke="currentColor"/><rect x="7.5" y="7.5" width="5" height="5" rx="1" stroke="currentColor"/></svg>
-      </button>
-    </div>
-    <div class="progress-label">
-      <span id="progressDim">Academic Readiness</span>
-      <span id="progressCount">1 / 12</span>
-    </div>
-  </div>
-
-  <!-- OVERVIEW MODAL -->
-  <div class="overview-modal" id="overviewModal">
-    <div class="overview-panel">
-      <div class="overview-panel-head">
-        <div class="overview-panel-title">Assessment Overview</div>
-        <button class="overview-close" id="overviewCloseBtn">✕</button>
-      </div>
-      <div class="overview-panel-sub" id="overviewSub">14 of 26 questions completed</div>
-      <div id="overviewGrid"></div>
-      <div class="overview-legend" id="overviewLegendRow">
-        <span><i class="dot done"></i> Answered</span>
-        <span><i class="dot current"></i> Current</span>
-        <span><i class="dot upcoming"></i> Not yet reached</span>
-      </div>
-    </div>
   </div>
 
   <!-- LANDING / LOGIN -->
@@ -603,12 +328,12 @@
       <div class="instructions-block">
         <div class="instructions-title">Before you begin</div>
         <ul class="instructions-list">
-          <li><b>Format.</b> One question at a time, across four sections. You'll review each answer before submitting it.</li>
+          <li><b>Question map.</b> After you begin, you'll see every question laid out in a map. Answer them in any order you like.</li>
           <li><b>No going back.</b> Once you submit an answer, it's final — you can't return to change it.</li>
-          <li><b>Timed, not rushed.</b> Each question shows a running timer so we can see how long you take — there's no countdown or cutoff, so take the time you need.</li>
+          <li><b>Timed, not rushed.</b> Each question shows a running timer so we can see how long you take — there's no countdown or cutoff.</li>
           <li><b>Save &amp; resume.</b> Your progress saves after every question. Close the tab any time and resume later with your email — your session stays open for 14 days.</li>
           <li><b>Length.</b> This sample section takes roughly 12–15 minutes.</li>
-          <li><b>Result.</b> On completion, you'll see your readiness band and a downloadable report immediately.</li>
+          <li><b>Result.</b> Once every question is answered, you'll see your readiness band and a downloadable report immediately.</li>
         </ul>
       </div>
 
@@ -624,7 +349,6 @@
       </div>
 
       <button class="btn" id="startBtn">Begin Assessment</button>
-      <button class="btn ghost" id="previewSectionsBtn" style="margin-top:10px;">Preview sections &amp; choose where to start</button>
       <div class="link-row">Already started? <button class="linklike" id="resumeLink">Resume with your email</button></div>
       <div class="login-foot-note">Your progress is saved automatically as you go.<br>Sessions remain open for 14 days.</div>
     </div>
@@ -636,7 +360,7 @@
       <img src="" class="login-mark-logo" id="loginLogo2" alt="Dronafy">
       <div class="login-eyebrow">Drona German Readiness Portal</div>
       <h1 style="font-size:1.4rem;">Resume your assessment</h1>
-      <p class="lede">Enter the email you used when you started. If your session is still active, we'll take you back to exactly where you left off.</p>
+      <p class="lede">Enter the email you used when you started. If your session is still active, we'll take you back to your question map.</p>
       <div class="field-group">
         <label class="field-label" for="resumeEmailInput">EMAIL</label>
         <input type="email" id="resumeEmailInput" placeholder="you@example.com">
@@ -647,17 +371,26 @@
     </div>
   </div>
 
-  <!-- DIMENSION INTRO -->
-  <div class="screen" id="screen-dimintro">
-    <div class="dim-intro-eyebrow" id="dimIntroEyebrow">Next section</div>
-    <h2 id="dimIntroTitle">Academic Readiness</h2>
-    <p id="dimIntroDesc">A few questions on how you learn, reason, and study.</p>
-    <div class="estimate" id="dimIntroEstimate">⏱ About 4 minutes</div>
-    <button class="btn" id="dimIntroBtn">Continue</button>
+  <!-- GRID HUB (question map) -->
+  <div class="screen" id="screen-hub">
+    <div class="hub-head">
+      <h2>Your Question Map</h2>
+      <p>Click any question to answer it. Answered questions are locked and shown in gold.</p>
+      <div class="hub-progress-shell"><div class="hub-progress-fill" id="hubProgressFill" style="width:0%;"></div></div>
+      <div class="hub-progress-label" id="hubProgressLabel">0 of 26 answered</div>
+    </div>
+    <div id="hubGrid"></div>
+    <div class="hub-legend">
+      <span><i class="dot done"></i> Answered</span>
+      <span><i class="dot upcoming"></i> Not yet answered</span>
+    </div>
+    <div class="hub-cta-note" id="hubCtaNote">Answer every question to unlock your result.</div>
+    <button class="btn" id="viewResultsBtn" disabled>View My Results</button>
   </div>
 
   <!-- QUESTION -->
   <div class="screen" id="screen-question">
+    <button class="back-to-hub" id="backToHubBtn">← Back to question map</button>
     <div class="q-meta-row">
       <div class="q-meta" id="qMeta">Academic Readiness — Learning Ability</div>
       <div class="q-timer" id="qTimer"><span class="timer-dot"></span>00:00</div>
@@ -679,8 +412,9 @@
       <div class="flag-note" id="flagNote" style="display:none;"></div>
     </div>
 
-    <div class="section-title">By dimension</div>
+    <div class="section-title">By dimension — click any cell for detail</div>
     <div class="radar-wrap" id="heatmapWrap"></div>
+    <div class="heat-hint">Tap or click a colored cell to see that question's detail</div>
     <div class="dim-bars" id="dimBars"></div>
 
     <div class="section-title">Trade clusters that fit your profile</div>
@@ -693,13 +427,31 @@
   <footer class="foot">Developed by Dronafy — An Altumind Venture. A diagnostic framework for Ausbildung and German labour-market readiness.</footer>
 </div>
 
+<!-- ITEM DETAIL MODAL (heatmap drill-down) -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-panel">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title" id="detailTitle">Question detail</div>
+        <div class="detail-meta" id="detailMeta">Academic Readiness — Learning Ability</div>
+      </div>
+      <button class="modal-close" id="detailCloseBtn">✕</button>
+    </div>
+    <div class="detail-prompt" id="detailPrompt"></div>
+    <div id="detailAnswerBox"></div>
+    <div class="detail-row"><span>Score</span><b id="detailScore">—</b></div>
+    <div class="detail-row"><span>Time spent</span><b id="detailTime">—</b></div>
+  </div>
+</div>
+
 <script>
 /* =========================================================
    Drona German Readiness Assessment — Representative Build
-   Sample item bank across all 4 dimensions.
-   Persistence: localStorage (demo). Production build syncs
-   each answer to Apps Script/Sheets via GET, keyed by session
-   email, for true cross-device resume.
+   Navigation model: grid hub. Every question is reachable
+   from the question map in any order; once submitted, an
+   answer is locked. Persistence: localStorage (demo). The
+   production build syncs each answer to Apps Script/Sheets
+   via GET for true cross-device resume.
    ========================================================= */
 
 const EXPIRY_DAYS = 14;
@@ -997,34 +749,17 @@ let state = {
   name: "",
   email: "",
   startedAt: null,
-  currentDim: 0,
-  currentItem: 0,
-  responses: {}, // itemId -> { raw, score }
-  complete: false,
-  dimOrder: [0,1,2,3] // traversal order of DIMENSIONS indices for this session
+  currentDim: null,
+  currentItem: null,
+  responses: {}, // itemId -> { raw, score, dimId, timeSpent }
+  complete: false
 };
 
 const flatItems = [];
 DIMENSIONS.forEach((d, di) => d.items.forEach((it, ii) => flatItems.push({ dimIndex: di, itemIndex: ii, dimId: d.id, item: it })));
 
-function getDimOrder(){
-  return (state.dimOrder && state.dimOrder.length === DIMENSIONS.length) ? state.dimOrder : [0,1,2,3];
-}
-function orderedFlatItems(){
-  const order = getDimOrder();
-  const out = [];
-  order.forEach(di => DIMENSIONS[di].items.forEach((it, ii) => out.push({ dimIndex: di, itemIndex: ii, item: it })));
-  return out;
-}
-function nextDimAfter(di){
-  const order = getDimOrder();
-  const pos = order.indexOf(di);
-  if(pos === -1 || pos + 1 >= order.length) return null;
-  return order[pos + 1];
-}
-
 // ---------- Persistence (localStorage demo layer) ----------
-function storageKey(email){ return "garaf_session_" + email.trim().toLowerCase(); }
+function storageKey(email){ return "drona_grr_session_" + email.trim().toLowerCase(); }
 
 function saveState(){
   if(!state.email) return;
@@ -1044,10 +779,7 @@ function daysRemaining(){
   const elapsed = (Date.now() - state.startedAt) / (1000*60*60*24);
   return Math.max(0, Math.ceil(EXPIRY_DAYS - elapsed));
 }
-
-function isExpired(){
-  return daysRemaining() <= 0;
-}
+function isExpired(){ return daysRemaining() <= 0; }
 
 // ---------- Navigation ----------
 const screens = {};
@@ -1068,77 +800,6 @@ function updateExpiryPill(){
   pill.classList.toggle("warn", d <= 3);
 }
 
-function updateProgress(){
-  const block = document.getElementById("progressBlock");
-  const done = Object.keys(state.responses).length;
-  const total = flatItems.length;
-  block.style.display = "block";
-  document.getElementById("progressFill").style.width = Math.round((done/total)*100) + "%";
-  document.getElementById("progressDim").textContent = DIMENSIONS[state.currentDim].name;
-  document.getElementById("progressCount").textContent = `${done} / ${total}`;
-  document.getElementById("overviewCount").textContent = `${done}/${total}`;
-}
-
-// ---------- Overview modal ----------
-document.getElementById("overviewBtn").addEventListener("click", () => renderOverview(true));
-document.getElementById("overviewCloseBtn").addEventListener("click", () => {
-  document.getElementById("overviewModal").classList.remove("active");
-});
-document.getElementById("overviewModal").addEventListener("click", (e) => {
-  if(e.target.id === "overviewModal") e.currentTarget.classList.remove("active");
-});
-
-function renderOverview(open, opts){
-  const selectMode = !!(opts && opts.selectMode);
-  const done = selectMode ? 0 : Object.keys(state.responses).length;
-  const total = flatItems.length;
-
-  document.getElementById("overviewSub").textContent = selectMode
-    ? "Choose which section to begin with — questions within a section still run in order."
-    : `${done} of ${total} questions completed`;
-
-  const grid = document.getElementById("overviewGrid");
-  grid.innerHTML = "";
-  DIMENSIONS.forEach((d, di) => {
-    const dimDone = selectMode ? 0 : d.items.filter(it => state.responses[it.id]).length;
-    const block = document.createElement("div");
-    block.className = "overview-dim-block";
-    const label = document.createElement("div");
-    label.className = "overview-dim-label";
-
-    if(selectMode){
-      label.innerHTML = `<span>${d.name} <span style="opacity:0.5;">(${d.items.length} questions, ${d.estimate.replace('About ','~')})</span></span>`;
-      const startBtn = document.createElement("button");
-      startBtn.textContent = "Start here";
-      startBtn.className = "overview-start-btn";
-      startBtn.addEventListener("click", () => beginSession(di));
-      block.appendChild(label);
-      block.appendChild(startBtn);
-    } else {
-      label.innerHTML = `<span>${d.name}</span><span>${dimDone}/${d.items.length}</span>`;
-      block.appendChild(label);
-      const cellGrid = document.createElement("div");
-      cellGrid.className = "overview-item-grid";
-      d.items.forEach((it, ii) => {
-        const cell = document.createElement("div");
-        cell.className = "overview-cell";
-        const isDone = !!state.responses[it.id];
-        const isCurrent = di === state.currentDim && ii === state.currentItem && !state.complete;
-        if(isDone){ cell.classList.add("done"); cell.textContent = "✓"; }
-        else if(isCurrent){ cell.classList.add("current"); cell.textContent = String(ii+1); }
-        else { cell.textContent = String(ii+1); }
-        cellGrid.appendChild(cell);
-      });
-      block.appendChild(cellGrid);
-    }
-    grid.appendChild(block);
-  });
-
-  document.getElementById("overviewLegendRow").style.display = selectMode ? "none" : "flex";
-
-  if(open) document.getElementById("overviewModal").classList.add("active");
-}
-
 // ---------- Landing ----------
 function validateEntry(){
   const name = document.getElementById("nameInput").value.trim();
@@ -1150,29 +811,20 @@ function validateEntry(){
   return { name, email };
 }
 
-function beginSession(startDimIndex){
+document.getElementById("startBtn").addEventListener("click", () => {
   const entry = validateEntry();
   if(!entry) return;
-  const order = [startDimIndex, ...DIMENSIONS.map((_,i)=>i).filter(i => i !== startDimIndex)];
   state.name = entry.name;
   state.email = entry.email;
   state.startedAt = Date.now();
-  state.dimOrder = order;
-  state.currentDim = startDimIndex;
-  state.currentItem = 0;
+  state.currentDim = null;
+  state.currentItem = null;
   state.responses = {};
   state.complete = false;
   saveState();
-  document.getElementById("overviewModal").classList.remove("active");
-  enterDimensionIntro(startDimIndex);
-}
-
-document.getElementById("startBtn").addEventListener("click", () => beginSession(0));
-
-document.getElementById("previewSectionsBtn").addEventListener("click", () => {
-  const entry = validateEntry();
-  if(!entry) return;
-  renderOverview(true, { selectMode: true });
+  updateExpiryPill();
+  renderHub();
+  showScreen("screen-hub");
 });
 
 document.getElementById("resumeLink").addEventListener("click", () => showScreen("screen-resume"));
@@ -1194,62 +846,89 @@ document.getElementById("resumeSubmitBtn").addEventListener("click", () => {
     errorEl.style.display = "block";
     return;
   }
+  updateExpiryPill();
   if(state.complete){
     renderResults();
     showScreen("screen-results");
     return;
   }
-  updateExpiryPill();
-  goToCurrentQuestion(true);
+  resumeBannerPending = true;
+  renderHub();
+  showScreen("screen-hub");
 });
 
-// ---------- Dimension intro ----------
-function enterDimensionIntro(dimIndex){
-  state.currentDim = dimIndex;
-  const d = DIMENSIONS[dimIndex];
-  const order = getDimOrder();
-  const posInOrder = order.indexOf(dimIndex) + 1;
-  document.getElementById("dimIntroEyebrow").textContent = `Section ${posInOrder} of ${order.length}`;
-  document.getElementById("dimIntroTitle").textContent = d.name;
-  document.getElementById("dimIntroDesc").textContent = d.desc;
-  document.getElementById("dimIntroEstimate").textContent = "⏱ " + d.estimate;
+// ---------- Grid Hub ----------
+let resumeBannerPending = false;
+
+function renderHub(){
+  const done = Object.keys(state.responses).length;
+  const total = flatItems.length;
+  document.getElementById("hubProgressFill").style.width = Math.round((done/total)*100) + "%";
+  document.getElementById("hubProgressLabel").textContent = `${done} of ${total} answered`;
   updateExpiryPill();
-  document.getElementById("progressBlock").style.display = "none";
-  showScreen("screen-dimintro");
-}
 
-document.getElementById("dimIntroBtn").addEventListener("click", () => {
-  state.currentItem = 0;
-  saveState();
-  renderQuestion();
-});
+  const grid = document.getElementById("hubGrid");
+  grid.innerHTML = "";
 
-// ---------- Question rendering ----------
-function currentFlatIndex(){
-  return flatItems.findIndex(f => f.dimIndex === state.currentDim && f.itemIndex === state.currentItem);
-}
+  DIMENSIONS.forEach((d, di) => {
+    const dimDone = d.items.filter(it => state.responses[it.id]).length;
+    const block = document.createElement("div");
+    block.className = "hub-dim-block";
 
-function goToCurrentQuestion(fromResume){
-  // find first unanswered item, following this session's chosen dimension order
-  const ordered = orderedFlatItems();
-  for(let i=0;i<ordered.length;i++){
-    const f = ordered[i];
-    if(!state.responses[f.item.id]){
-      state.currentDim = f.dimIndex;
-      state.currentItem = f.itemIndex;
-      if(fromResume){
-        showResumeBanner();
+    const head = document.createElement("div");
+    head.className = "hub-dim-head";
+    head.innerHTML = `<b>${d.name}</b><span>${dimDone}/${d.items.length}</span>`;
+    block.appendChild(head);
+
+    const desc = document.createElement("div");
+    desc.className = "hub-dim-desc";
+    desc.textContent = d.desc;
+    block.appendChild(desc);
+
+    const cellGrid = document.createElement("div");
+    cellGrid.className = "hub-cell-grid";
+    d.items.forEach((it, ii) => {
+      const cell = document.createElement("div");
+      const isDone = !!state.responses[it.id];
+      cell.className = "hub-cell" + (isDone ? " done" : "");
+      cell.textContent = isDone ? "✓" : String(ii+1);
+      cell.title = isDone ? "Already answered — locked" : `${d.name} — ${it.sub}`;
+      if(!isDone){
+        cell.addEventListener("click", () => openQuestion(di, ii));
       }
-      renderQuestion();
-      return;
-    }
+      cellGrid.appendChild(cell);
+    });
+    block.appendChild(cellGrid);
+    grid.appendChild(block);
+  });
+
+  const allDone = done === total;
+  const viewBtn = document.getElementById("viewResultsBtn");
+  viewBtn.disabled = !allDone;
+  document.getElementById("hubCtaNote").textContent = allDone
+    ? "All questions answered — your result is ready."
+    : `Answer every question to unlock your result (${total - done} remaining).`;
+
+  if(resumeBannerPending && !allDone){
+    const banner = document.createElement("div");
+    banner.className = "banner";
+    banner.textContent = `Welcome back, ${state.name.split(" ")[0]}. Pick up wherever you left off.`;
+    document.getElementById("screen-hub").insertBefore(banner, document.getElementById("hubGrid"));
+    resumeBannerPending = false;
+    setTimeout(() => banner.remove(), 4500);
   }
-  // all answered
-  finishAssessment();
 }
 
-let showBannerOnce = false;
-function showResumeBanner(){ showBannerOnce = true; }
+document.getElementById("viewResultsBtn").addEventListener("click", () => {
+  if(Object.keys(state.responses).length < flatItems.length) return;
+  finishAssessment();
+});
+
+document.getElementById("backToHubBtn").addEventListener("click", () => {
+  clearInterval(timerInterval);
+  renderHub();
+  showScreen("screen-hub");
+});
 
 // ---------- Per-question timer ----------
 let questionStartedAt = null;
@@ -1261,13 +940,11 @@ function startQuestionTimer(){
   updateTimerDisplay();
   timerInterval = setInterval(updateTimerDisplay, 1000);
 }
-
 function stopQuestionTimer(){
   clearInterval(timerInterval);
   if(!questionStartedAt) return 0;
   return Math.round((Date.now() - questionStartedAt) / 1000);
 }
-
 function updateTimerDisplay(){
   if(!questionStartedAt) return;
   const secs = Math.floor((Date.now() - questionStartedAt) / 1000);
@@ -1277,22 +954,24 @@ function updateTimerDisplay(){
   if(el) el.innerHTML = `<span class="timer-dot"></span>${m}:${s}`;
 }
 
+// ---------- Question rendering ----------
+let pendingSelection = null;
+
+function openQuestion(dimIndex, itemIndex){
+  state.currentDim = dimIndex;
+  state.currentItem = itemIndex;
+  renderQuestion();
+}
+
 function renderQuestion(){
   const d = DIMENSIONS[state.currentDim];
   const item = d.items[state.currentItem];
-  document.getElementById("progressBlock").style.display = "block";
-  updateProgress();
-  updateExpiryPill();
 
   document.getElementById("qMeta").textContent = `${d.name} — ${item.sub}`;
 
   const stimEl = document.getElementById("qStimulus");
-  if(item.stimulus){
-    stimEl.style.display = "block";
-    stimEl.textContent = item.stimulus;
-  } else {
-    stimEl.style.display = "none";
-  }
+  if(item.stimulus){ stimEl.style.display = "block"; stimEl.textContent = item.stimulus; }
+  else { stimEl.style.display = "none"; }
 
   document.getElementById("qPrompt").textContent = item.prompt;
 
@@ -1337,18 +1016,7 @@ function renderQuestion(){
 
   showScreen("screen-question");
   startQuestionTimer();
-
-  if(showBannerOnce){
-    const banner = document.createElement("div");
-    banner.className = "banner";
-    banner.textContent = `Welcome back, ${state.name.split(" ")[0]}. Picking up right where you left off.`;
-    document.getElementById("screen-question").insertBefore(banner, document.getElementById("qMeta"));
-    showBannerOnce = false;
-    setTimeout(() => banner.remove(), 4000);
-  }
 }
-
-let pendingSelection = null;
 
 document.getElementById("submitAnswerBtn").addEventListener("click", () => {
   if(pendingSelection === null) return;
@@ -1356,7 +1024,6 @@ document.getElementById("submitAnswerBtn").addEventListener("click", () => {
   const item = d.items[state.currentItem];
   const container = (item.type === "likert") ? document.getElementById("qLikert") : document.getElementById("qOptions");
 
-  // lock visuals — no re-answer
   Array.from(container.children).forEach((c, idx) => {
     c.style.pointerEvents = "none";
     if(idx === pendingSelection) c.classList.add("selected", "locked");
@@ -1369,46 +1036,28 @@ document.getElementById("submitAnswerBtn").addEventListener("click", () => {
   if(item.type === "mcq"){
     score = (pendingSelection === item.correct) ? item.weight : 0;
   } else if(item.type === "likert"){
-    let v = pendingSelection; // 0-4
+    let v = pendingSelection;
     if(item.reverse) v = 4 - v;
     score = (v/4) * item.weight;
   } else if(item.type === "forced-choice"){
-    score = item.weight; // scored into interest profile, not right/wrong — full pt for signal captured
+    score = item.weight;
   }
 
-  state.responses[item.id] = { raw: pendingSelection, score: score, dimId: DIMENSIONS[state.currentDim].id, timeSpent: timeSpent };
+  state.responses[item.id] = { raw: pendingSelection, score: score, dimId: d.id, timeSpent: timeSpent };
   saveState();
 
-  setTimeout(() => advance(), 420);
+  setTimeout(() => {
+    const done = Object.keys(state.responses).length;
+    if(done >= flatItems.length){
+      finishAssessment();
+    } else {
+      renderHub();
+      showScreen("screen-hub");
+    }
+  }, 420);
 });
 
-function advance(){
-  const d = DIMENSIONS[state.currentDim];
-  if(state.currentItem + 1 < d.items.length){
-    state.currentItem += 1;
-    saveState();
-    renderQuestion();
-  } else {
-    const nd = nextDimAfter(state.currentDim);
-    if(nd !== null){
-      state.currentDim = nd;
-      state.currentItem = 0;
-      saveState();
-      enterDimensionIntro(nd);
-    } else {
-      finishAssessment();
-    }
-  }
-}
-
 // ---------- Scoring & Results ----------
-function finishAssessment(){
-  state.complete = true;
-  saveState();
-  renderResults();
-  showScreen("screen-results");
-}
-
 function computeDimensionScores(){
   const out = {};
   DIMENSIONS.forEach(d => {
@@ -1418,7 +1067,6 @@ function computeDimensionScores(){
       const r = state.responses[it.id];
       if(r) earned += r.score;
     });
-    // scale earned/possible to the dimension's maxScore
     const scaled = possible > 0 ? (earned/possible) * d.maxScore : 0;
     out[d.id] = { earned: scaled, max: d.maxScore, pct: possible>0 ? earned/possible : 0 };
   });
@@ -1427,37 +1075,83 @@ function computeDimensionScores(){
 
 function heatColor(pct){
   const p = Math.max(0, Math.min(1, pct));
-  const hue = 6 + (45-6)*p;   // deep red-orange at low, gold at high
+  const hue = 6 + (45-6)*p;
   const light = 34 + 22*p;
   return `hsl(${hue.toFixed(0)}, 60%, ${light.toFixed(0)}%)`;
 }
 
-function buildHeatmapHTML(dimScores){
-  const rows = DIMENSIONS.map(d => {
-    const cells = d.items.map(it => {
+function buildHeatmapHTML(dimScores, interactive){
+  const rows = DIMENSIONS.map((d, di) => {
+    const cells = d.items.map((it, ii) => {
       const r = state.responses[it.id];
       const pct = r ? Math.max(0, Math.min(1, r.score/it.weight)) : 0;
       const color = heatColor(pct);
       const pctLabel = Math.round(pct*100);
-      return `<div class="heat-cell" title="${it.sub} — ${pctLabel}%" style="flex:1; min-width:8px; height:24px; border-radius:5px; background:${color};"></div>`;
+      const clickAttr = interactive ? ` onclick="openItemDetail(${di},${ii})"` : "";
+      return `<div class="heat-cell" title="${it.sub} — ${pctLabel}%" style="background:${color};"${clickAttr}></div>`;
     }).join("");
     const dimPct = Math.round((dimScores[d.id].earned/dimScores[d.id].max)*100);
-    return `<div class="heat-row" style="margin-bottom:16px;">
-      <div class="heat-row-label" style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:7px; font-family:Arial, sans-serif; color:#F5F0E8;">
-        <b>${d.name}</b><span style="font-family:Georgia, serif; color:#C9A84C; font-weight:700;">${dimPct}%</span>
-      </div>
-      <div class="heat-row-cells" style="display:flex; gap:4px;">${cells}</div>
+    return `<div class="heat-row">
+      <div class="heat-row-label"><b>${d.name}</b><span class="heat-row-pct">${dimPct}%</span></div>
+      <div class="heat-row-cells">${cells}</div>
     </div>`;
   }).join("");
 
-  return `<div>
+  return `<div class="heatmap">
     ${rows}
-    <div style="display:flex; align-items:center; gap:10px; font-size:0.7rem; opacity:0.55; margin-top:14px; margin-bottom:8px; font-family:Arial, sans-serif; color:#F5F0E8;">
-      <span>Needs attention</span>
-      <div style="flex:1; max-width:140px; height:6px; border-radius:4px; background:linear-gradient(90deg, hsl(6,60%,38%), hsl(45,65%,58%));"></div>
-      <span>Strong</span>
-    </div>
+    <div class="heat-legend"><span>Needs attention</span><div class="heat-legend-bar"></div><span>Strong</span></div>
   </div>`;
+}
+
+// ---------- Heatmap drill-down ----------
+function openItemDetail(dimIndex, itemIndex){
+  const d = DIMENSIONS[dimIndex];
+  const item = d.items[itemIndex];
+  const r = state.responses[item.id];
+  if(!r) return;
+
+  document.getElementById("detailTitle").textContent = item.sub;
+  document.getElementById("detailMeta").textContent = `${d.name} — Question ${itemIndex+1} of ${d.items.length}`;
+  document.getElementById("detailPrompt").textContent = item.prompt;
+
+  const box = document.getElementById("detailAnswerBox");
+  let boxHTML = "";
+  if(item.type === "mcq"){
+    const isCorrect = r.raw === item.correct;
+    boxHTML = `<div class="detail-answer-box ${isCorrect ? 'correct' : 'incorrect'}">
+      <b>Candidate's answer:</b> ${item.options[r.raw]}<br>
+      <b>Correct answer:</b> ${item.options[item.correct]}<br>
+      <span style="opacity:0.7;">${isCorrect ? '✓ Correct' : '✗ Incorrect'}</span>
+    </div>`;
+  } else if(item.type === "likert"){
+    boxHTML = `<div class="detail-answer-box">
+      <b>Response:</b> ${item.scale[r.raw]} (${r.raw+1} of ${item.scale.length})
+    </div>`;
+  } else if(item.type === "forced-choice"){
+    boxHTML = `<div class="detail-answer-box">
+      <b>Preferred option:</b> ${item.options[r.raw]}
+    </div>`;
+  }
+  box.innerHTML = boxHTML;
+
+  document.getElementById("detailScore").textContent = `${r.score.toFixed(1)} / ${item.weight}`;
+  const mins = Math.floor((r.timeSpent||0)/60), secs = (r.timeSpent||0)%60;
+  document.getElementById("detailTime").textContent = `${mins}m ${secs}s`;
+
+  document.getElementById("detailModal").classList.add("active");
+}
+document.getElementById("detailCloseBtn").addEventListener("click", () => {
+  document.getElementById("detailModal").classList.remove("active");
+});
+document.getElementById("detailModal").addEventListener("click", (e) => {
+  if(e.target.id === "detailModal") e.currentTarget.classList.remove("active");
+});
+
+function finishAssessment(){
+  state.complete = true;
+  saveState();
+  renderResults();
+  showScreen("screen-results");
 }
 
 function renderResults(){
@@ -1468,16 +1162,12 @@ function renderResults(){
 
   let band = BANDS.find(b => total >= b.min);
   let flagged = false;
-
   const germanyPct = dimScores["germany"].pct;
   if(germanyPct < GERMANY_FLOOR_PCT){
     flagged = true;
-    // cap at "Ready with Support" regardless of total
     const capIndex = BANDS.findIndex(b => b.name === "Ready with Support");
     const currentIndex = BANDS.findIndex(b => b.name === band.name);
-    if(currentIndex < capIndex){
-      band = BANDS[capIndex];
-    }
+    if(currentIndex < capIndex) band = BANDS[capIndex];
   }
 
   document.getElementById("bandName").textContent = band.name;
@@ -1491,12 +1181,10 @@ function renderResults(){
     flagEl.style.display = "none";
   }
 
-  // dimension bars
+  document.getElementById("heatmapWrap").innerHTML = buildHeatmapHTML(dimScores, true);
+
   const barsEl = document.getElementById("dimBars");
   barsEl.innerHTML = "";
-
-  document.getElementById("heatmapWrap").innerHTML = buildHeatmapHTML(dimScores);
-
   const narratives = {
     academic: { high: "Strong learning and academic foundation.", low: "Consider extra support with core study skills before starting." },
     occupational: { high: "Clear aptitude signal for hands-on and technical work.", low: "Aptitude profile is still forming — worth exploring more trade options." },
@@ -1516,7 +1204,6 @@ function renderResults(){
     barsEl.appendChild(row);
   });
 
-  // cluster matching (illustrative, based on occupational responses)
   const clusterEl = document.getElementById("clusterList");
   clusterEl.innerHTML = "";
   const mechScore = state.responses["oc1"] ? state.responses["oc1"].score/2 : 0.5;
@@ -1532,13 +1219,9 @@ function renderResults(){
     row.innerHTML = `<span>${r.name}</span><span class="cluster-fit">${r.fit}%</span>`;
     clusterEl.appendChild(row);
   });
-
-  document.getElementById("progressBlock").style.display = "none";
 }
 
-document.getElementById("restartBtn").addEventListener("click", () => {
-  location.reload();
-});
+document.getElementById("restartBtn").addEventListener("click", () => { location.reload(); });
 
 // ---------- Report generation ----------
 function buildReportHTML(){
@@ -1592,7 +1275,19 @@ function buildReportHTML(){
   }).join("");
 
   const clusterEl = document.getElementById("clusterList");
-  const clusterRowsHTML = clusterEl.innerHTML.replace(/class="cluster-row"/g, 'style="display:flex;justify-content:space-between;padding:10px 14px;border:1px solid rgba(245,240,232,0.14);border-radius:8px;margin-bottom:8px;font-size:0.9rem;color:#F5F0E8;"').replace(/class="cluster-fit"/g,'style="color:#C9A84C;font-weight:700;font-family:Georgia,serif;"');
+  const clusterRowsHTML = clusterEl.innerHTML
+    .replace(/class="cluster-row"/g, 'style="display:flex;justify-content:space-between;padding:10px 14px;border:1px solid rgba(245,240,232,0.14);border-radius:8px;margin-bottom:8px;font-size:0.9rem;color:#F5F0E8;"')
+    .replace(/class="cluster-fit"/g,'style="color:#C9A84C;font-weight:700;font-family:Georgia,serif;"');
+
+  const heatmapReportHTML = buildHeatmapHTML(dimScores, false)
+    .replace(/class="heatmap"/g, 'style="margin-bottom:8px;"')
+    .replace(/class="heat-row"/g, 'style="margin-bottom:16px;"')
+    .replace(/class="heat-row-label"/g, 'style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:7px;font-family:Arial,sans-serif;color:#F5F0E8;"')
+    .replace(/class="heat-row-pct"/g, 'style="font-family:Georgia,serif;color:#C9A84C;font-weight:700;"')
+    .replace(/class="heat-row-cells"/g, 'style="display:flex;gap:4px;"')
+    .replace(/class="heat-cell"/g, 'style="height:26px;border-radius:5px;flex:1;min-width:8px;"')
+    .replace(/class="heat-legend"/g, 'style="display:flex;align-items:center;gap:10px;font-size:0.7rem;opacity:0.55;margin-top:14px;margin-bottom:8px;font-family:Arial,sans-serif;color:#F5F0E8;"')
+    .replace(/class="heat-legend-bar"/g, 'style="flex:1;max-width:140px;height:6px;border-radius:4px;background:linear-gradient(90deg, hsl(6,60%,38%), hsl(45,65%,58%));"');
 
   return `
 <!DOCTYPE html>
@@ -1611,28 +1306,14 @@ function buildReportHTML(){
     padding: 50px 40px 80px;
     background: #0D2B1F;
   }
-  .head{
-    display:flex; justify-content:space-between; align-items:flex-start;
-    border-bottom: 2px solid #C9A84C;
-    padding-bottom: 22px;
-    margin-bottom: 30px;
-  }
+  .head{ display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 2px solid #C9A84C; padding-bottom: 22px; margin-bottom: 30px; }
   .head h1{ font-size:1.5rem; margin:0 0 4px; color:#F5F0E8; }
   .head .sub{ font-size:0.85rem; color:#C9A84C; font-family: Arial, sans-serif; }
   .mark{ text-align:right; font-family: Arial, sans-serif; font-size:0.78rem; color:rgba(245,240,232,0.55); }
-  .candidate-block{
-    display:flex; justify-content:space-between;
-    background: rgba(245,240,232,0.05); border:1px solid rgba(245,240,232,0.12);
-    border-radius:10px; padding:18px 22px; margin-bottom:34px;
-    font-family: Arial, sans-serif;
-  }
+  .candidate-block{ display:flex; justify-content:space-between; background: rgba(245,240,232,0.05); border:1px solid rgba(245,240,232,0.12); border-radius:10px; padding:18px 22px; margin-bottom:34px; font-family: Arial, sans-serif; }
   .candidate-block div span{ display:block; font-size:0.72rem; color:rgba(245,240,232,0.5); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; }
   .candidate-block div b{ font-size:1rem; color:#F5F0E8; }
-  .band-block{
-    text-align:center; padding: 30px 20px; border:1px solid #C9A84C; border-radius:12px;
-    background: linear-gradient(180deg, rgba(201,168,76,0.14), rgba(201,168,76,0.02));
-    margin-bottom: 34px;
-  }
+  .band-block{ text-align:center; padding: 30px 20px; border:1px solid #C9A84C; border-radius:12px; background: linear-gradient(180deg, rgba(201,168,76,0.14), rgba(201,168,76,0.02)); margin-bottom: 34px; }
   .band-block .name{ font-size:1.7rem; color:#C9A84C; margin-bottom:6px; }
   .band-block .score{ font-family: Arial, sans-serif; font-size:0.9rem; color:rgba(245,240,232,0.75); }
   .flag{ margin-top:16px; text-align:left; font-family:Arial,sans-serif; font-size:0.82rem; background:rgba(196,103,74,0.15); border:1px solid rgba(196,103,74,0.5); color:#E0A18E; padding:12px 14px; border-radius:8px; line-height:1.5; }
@@ -1640,10 +1321,7 @@ function buildReportHTML(){
   table{ width:100%; border-collapse:collapse; }
   .item-table th{ text-align:left; font-family:Arial,sans-serif; font-size:0.72rem; text-transform:uppercase; color:rgba(245,240,232,0.45); padding-bottom:6px; border-bottom:1px solid rgba(245,240,232,0.14); }
   .foot{ margin-top:50px; text-align:center; font-family:Arial,sans-serif; font-size:0.72rem; color:rgba(245,240,232,0.35); }
-  .print-btn{
-    font-family: Arial, sans-serif; background:#C9A84C; color:#0D2B1F; border:none; border-radius:8px;
-    padding:12px 20px; font-size:0.9rem; cursor:pointer; margin-bottom:24px; font-weight:600;
-  }
+  .print-btn{ font-family: Arial, sans-serif; background:#C9A84C; color:#0D2B1F; border:none; border-radius:8px; padding:12px 20px; font-size:0.9rem; cursor:pointer; margin-bottom:24px; font-weight:600; }
 </style>
 </head>
 <body>
@@ -1671,8 +1349,8 @@ function buildReportHTML(){
     ${flagged ? `<div class="flag"><b>Germany Readiness Gap flagged.</b> Score in this dimension fell below the recommended threshold. A focused Germany Readiness module — legal, financial, and daily-life preparation — is recommended before proceeding, regardless of overall score.</div>` : ""}
   </div>
 
-  <h2 class="section">Readiness profile</h2>
-  <div style="margin-bottom:10px;">${buildHeatmapHTML(dimScores)}</div>
+  <h2 class="section">Readiness heatmap</h2>
+  <div style="margin-bottom:10px;">${heatmapReportHTML}</div>
 
   <h2 class="section">Dimension breakdown</h2>
   <table>${dimRows}</table>
@@ -1701,7 +1379,6 @@ document.getElementById("downloadReportBtn").addEventListener("click", () => {
   document.body.appendChild(a);
   a.click();
   a.remove();
-  // Also open it in a new tab so the candidate can immediately print/save as PDF
   window.open(url, "_blank");
 });
 
