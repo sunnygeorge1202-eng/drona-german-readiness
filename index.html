@@ -251,6 +251,22 @@
   .heat-legend{ display:flex; align-items:center; gap:10px; font-size:0.7rem; opacity:0.55; margin-top:14px; margin-bottom:24px; }
   .heat-legend-bar{ flex:1; max-width:140px; height:6px; border-radius:4px; background: linear-gradient(90deg, hsl(6,60%,38%), hsl(45,65%,58%)); }
 
+  .dcard-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom: 26px; }
+  .dcard{
+    border:1px solid var(--line); border-radius:14px; padding:18px 10px 14px;
+    text-align:center; background: rgba(245,240,232,0.03);
+  }
+  .dcard-name{ font-size:0.8rem; margin-top:8px; font-weight:600; line-height:1.3; }
+  .dcard-frac{ font-size:0.72rem; opacity:0.55; margin-top:3px; }
+
+  .stat-row{ display:flex; gap:10px; margin-bottom: 26px; }
+  .stat-tile{
+    flex:1; text-align:center; border:1px solid var(--line); border-radius:12px;
+    padding: 15px 6px; background: rgba(245,240,232,0.03);
+  }
+  .stat-value{ font-family:'Playfair Display', serif; font-size:1.25rem; color: var(--gold); font-weight:700; }
+  .stat-label{ font-size:0.66rem; opacity:0.55; margin-top:5px; line-height:1.3; }
+
   .dim-bars{ margin-bottom: 30px; }
   .dim-bar-row{ margin-bottom: 16px; }
   .dim-bar-label{ display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:6px; }
@@ -412,10 +428,15 @@
       <div class="flag-note" id="flagNote" style="display:none;"></div>
     </div>
 
-    <div class="section-title">By dimension — click any cell for detail</div>
+    <div class="section-title">Readiness by dimension</div>
+    <div id="dimCards"></div>
+
+    <div class="section-title">At a glance</div>
+    <div id="statRow"></div>
+
+    <div class="section-title">Question-level heatmap — click any cell for detail</div>
     <div class="radar-wrap" id="heatmapWrap"></div>
     <div class="heat-hint">Tap or click a colored cell to see that question's detail</div>
-    <div class="dim-bars" id="dimBars"></div>
 
     <div class="section-title">Trade clusters that fit your profile</div>
     <div class="clusters" id="clusterList"></div>
@@ -1080,6 +1101,75 @@ function heatColor(pct){
   return `hsl(${hue.toFixed(0)}, 60%, ${light.toFixed(0)}%)`;
 }
 
+function qualLabel(pct){
+  if(pct >= 80) return { label: "Strong", color: "#C9A84C" };
+  if(pct >= 60) return { label: "Solid", color: "#C9A84C" };
+  if(pct >= 40) return { label: "Developing", color: "#D98A4A" };
+  return { label: "Needs Attention", color: "#C4674A" };
+}
+
+function buildDimensionCardsHTML(dimScores){
+  const R = 32, C = 2 * Math.PI * R;
+  const cards = DIMENSIONS.map(d => {
+    const s = dimScores[d.id];
+    const pct = Math.round((s.earned/s.max)*100);
+    const q = qualLabel(pct);
+    const dash = (pct/100) * C;
+    return `<div class="dcard">
+      <svg viewBox="0 0 76 76" width="76" height="76">
+        <circle cx="38" cy="38" r="${R}" fill="none" stroke="rgba(245,240,232,0.1)" stroke-width="7"/>
+        <circle cx="38" cy="38" r="${R}" fill="none" stroke="${q.color}" stroke-width="7" stroke-linecap="round"
+          stroke-dasharray="${dash.toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 38 38)"/>
+        <text x="38" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="17" font-weight="700" fill="#F5F0E8">${pct}%</text>
+        <text x="38" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="7.5" fill="${q.color}">${q.label}</text>
+      </svg>
+      <div class="dcard-name">${d.name}</div>
+      <div class="dcard-frac">${Math.round(s.earned)} / ${s.max}</div>
+    </div>`;
+  }).join("");
+  return `<div class="dcard-grid">${cards}</div>`;
+}
+
+function computeTimeStats(){
+  const entries = Object.entries(state.responses).map(([id, r]) => {
+    const flat = flatItems.find(f => f.item.id === id);
+    return { id, r, item: flat.item, dimId: flat.dimId, dimIndex: flat.dimIndex };
+  });
+  const totalTime = entries.reduce((a,e) => a + (e.r.timeSpent||0), 0);
+  const avg = entries.length ? totalTime/entries.length : 0;
+
+  const mcqs = entries.filter(e => e.item.type === "mcq");
+  const correctCount = mcqs.filter(e => e.r.raw === e.item.correct).length;
+  const accuracy = mcqs.length ? Math.round((correctCount/mcqs.length)*100) : null;
+
+  const sorted = [...entries].sort((a,b) => (a.r.timeSpent||0) - (b.r.timeSpent||0));
+  const fastest = sorted[0];
+  const slowest = sorted[sorted.length-1];
+
+  const timeByDim = {};
+  DIMENSIONS.forEach(d => timeByDim[d.id] = 0);
+  entries.forEach(e => timeByDim[e.dimId] += (e.r.timeSpent||0));
+
+  let full = 0, partial = 0, none = 0;
+  entries.forEach(e => {
+    const pct = e.r.score / e.item.weight;
+    if(pct >= 0.99) full++; else if(pct <= 0.01) none++; else partial++;
+  });
+
+  return { totalTime, avg, accuracy, mcqCount: mcqs.length, correctCount, fastest, slowest, timeByDim, full, partial, none, count: entries.length };
+}
+
+function buildQuickStatsHTML(stats){
+  const totalMin = Math.floor(stats.totalTime/60), totalSec = stats.totalTime%60;
+  const avgSec = Math.round(stats.avg);
+  const accStr = stats.accuracy !== null ? stats.accuracy + "%" : "—";
+  return `<div class="stat-row">
+    <div class="stat-tile"><div class="stat-value">${totalMin}m ${totalSec}s</div><div class="stat-label">Total time</div></div>
+    <div class="stat-tile"><div class="stat-value">${avgSec}s</div><div class="stat-label">Avg / question</div></div>
+    <div class="stat-tile"><div class="stat-value">${accStr}</div><div class="stat-label">Objective accuracy</div></div>
+  </div>`;
+}
+
 function buildHeatmapHTML(dimScores, interactive){
   const rows = DIMENSIONS.map((d, di) => {
     const cells = d.items.map((it, ii) => {
@@ -1182,27 +1272,8 @@ function renderResults(){
   }
 
   document.getElementById("heatmapWrap").innerHTML = buildHeatmapHTML(dimScores, true);
-
-  const barsEl = document.getElementById("dimBars");
-  barsEl.innerHTML = "";
-  const narratives = {
-    academic: { high: "Strong learning and academic foundation.", low: "Consider extra support with core study skills before starting." },
-    occupational: { high: "Clear aptitude signal for hands-on and technical work.", low: "Aptitude profile is still forming — worth exploring more trade options." },
-    germany: { high: "Well prepared for daily life, language, and legal basics in Germany.", low: "Notable gaps in Germany-specific readiness — this is the area to focus on next." },
-    employability: { high: "Solid workplace habits and professional behaviour.", low: "Some employability fundamentals need attention before starting work." }
-  };
-  DIMENSIONS.forEach(d => {
-    const s = dimScores[d.id];
-    const pct = Math.round((s.earned/s.max)*100);
-    const row = document.createElement("div");
-    row.className = "dim-bar-row";
-    row.innerHTML = `
-      <div class="dim-bar-label"><b>${d.name}</b><span>${Math.round(s.earned)} / ${s.max}</span></div>
-      <div class="dim-bar-shell"><div class="dim-bar-fill ${pct<60?'low':''}" style="width:${pct}%;"></div></div>
-      <div class="dim-narrative">${pct>=60 ? narratives[d.id].high : narratives[d.id].low}</div>
-    `;
-    barsEl.appendChild(row);
-  });
+  document.getElementById("dimCards").innerHTML = buildDimensionCardsHTML(dimScores);
+  document.getElementById("statRow").innerHTML = buildQuickStatsHTML(computeTimeStats());
 
   const clusterEl = document.getElementById("clusterList");
   clusterEl.innerHTML = "";
@@ -1244,7 +1315,79 @@ function buildReportHTML(){
   const totalMin = Math.floor(totalTime/60);
   const totalSec = totalTime%60;
 
+  const tstats = computeTimeStats();
+
   const dateStr = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+
+  const timeByDimRows = DIMENSIONS.map(d => {
+    const t = tstats.timeByDim[d.id] || 0;
+    const pctOfTotal = tstats.totalTime > 0 ? Math.round((t/tstats.totalTime)*100) : 0;
+    const m = Math.floor(t/60), s = t%60;
+    return `
+      <tr>
+        <td style="padding:10px 0; color:#F5F0E8; font-size:0.88rem;">${d.name}</td>
+        <td style="padding:10px 0; text-align:right; color:#F5F0E8; font-size:0.88rem;">${m}m ${s}s</td>
+        <td style="padding:10px 16px; width:120px;">
+          <div style="height:6px; background:rgba(245,240,232,0.12); border-radius:4px; overflow:hidden;">
+            <div style="height:100%; width:${pctOfTotal}%; background:#C9A84C;"></div>
+          </div>
+        </td>
+        <td style="padding:10px 0; text-align:right; color:rgba(245,240,232,0.5); font-size:0.8rem;">${pctOfTotal}%</td>
+      </tr>`;
+  }).join("");
+
+  const distTotal = tstats.count || 1;
+  const fullPct = Math.round((tstats.full/distTotal)*100);
+  const partialPct = Math.round((tstats.partial/distTotal)*100);
+  const nonePct = 100 - fullPct - partialPct;
+
+  const fastestName = tstats.fastest ? tstats.fastest.item.sub : "—";
+  const fastestTime = tstats.fastest ? `${Math.floor((tstats.fastest.r.timeSpent||0)/60)}m ${(tstats.fastest.r.timeSpent||0)%60}s` : "—";
+  const slowestName = tstats.slowest ? tstats.slowest.item.sub : "—";
+  const slowestTime = tstats.slowest ? `${Math.floor((tstats.slowest.r.timeSpent||0)/60)}m ${(tstats.slowest.r.timeSpent||0)%60}s` : "—";
+
+  const analyticsHTML = `
+    <div style="display:flex; gap:10px; margin-bottom:24px; font-family:Arial, sans-serif;">
+      <div style="flex:1; text-align:center; border:1px solid rgba(245,240,232,0.14); border-radius:10px; padding:14px 6px; background:rgba(245,240,232,0.03);">
+        <div style="font-family:Georgia, serif; font-size:1.2rem; color:#C9A84C; font-weight:700;">${totalMin}m ${totalSec}s</div>
+        <div style="font-size:0.66rem; opacity:0.55; margin-top:5px;">Total time</div>
+      </div>
+      <div style="flex:1; text-align:center; border:1px solid rgba(245,240,232,0.14); border-radius:10px; padding:14px 6px; background:rgba(245,240,232,0.03);">
+        <div style="font-family:Georgia, serif; font-size:1.2rem; color:#C9A84C; font-weight:700;">${Math.round(tstats.avg)}s</div>
+        <div style="font-size:0.66rem; opacity:0.55; margin-top:5px;">Avg / question</div>
+      </div>
+      <div style="flex:1; text-align:center; border:1px solid rgba(245,240,232,0.14); border-radius:10px; padding:14px 6px; background:rgba(245,240,232,0.03);">
+        <div style="font-family:Georgia, serif; font-size:1.2rem; color:#C9A84C; font-weight:700;">${tstats.accuracy !== null ? tstats.accuracy + '%' : '—'}</div>
+        <div style="font-size:0.66rem; opacity:0.55; margin-top:5px;">Objective accuracy (${tstats.correctCount}/${tstats.mcqCount})</div>
+      </div>
+    </div>
+
+    <div style="font-family:Arial, sans-serif; font-size:0.82rem; color:#F5F0E8; margin-bottom:10px; opacity:0.75;">Time invested by dimension</div>
+    <table style="width:100%; border-collapse:collapse; margin-bottom:22px;">${timeByDimRows}</table>
+
+    <div style="display:flex; gap:16px; margin-bottom:22px; font-family:Arial, sans-serif;">
+      <div style="flex:1; border-left:3px solid #6FA37A; padding:8px 12px; background:rgba(245,240,232,0.03); border-radius:6px;">
+        <div style="font-size:0.68rem; opacity:0.55; text-transform:uppercase; letter-spacing:0.03em;">Fastest response</div>
+        <div style="font-size:0.88rem; color:#F5F0E8; margin-top:4px;">${fastestName} — <b style="color:#C9A84C;">${fastestTime}</b></div>
+      </div>
+      <div style="flex:1; border-left:3px solid #C4674A; padding:8px 12px; background:rgba(245,240,232,0.03); border-radius:6px;">
+        <div style="font-size:0.68rem; opacity:0.55; text-transform:uppercase; letter-spacing:0.03em;">Slowest response</div>
+        <div style="font-size:0.88rem; color:#F5F0E8; margin-top:4px;">${slowestName} — <b style="color:#C9A84C;">${slowestTime}</b></div>
+      </div>
+    </div>
+
+    <div style="font-family:Arial, sans-serif; font-size:0.82rem; color:#F5F0E8; margin-bottom:10px; opacity:0.75;">Response quality distribution</div>
+    <div style="display:flex; height:22px; border-radius:6px; overflow:hidden; margin-bottom:8px;">
+      <div style="width:${fullPct}%; background:#C9A84C;" title="Full credit"></div>
+      <div style="width:${partialPct}%; background:#D98A4A;" title="Partial credit"></div>
+      <div style="width:${nonePct}%; background:#C4674A;" title="No credit"></div>
+    </div>
+    <div style="display:flex; gap:16px; font-family:Arial, sans-serif; font-size:0.72rem; opacity:0.65; margin-bottom:30px;">
+      <span>■ Full credit: ${tstats.full}</span>
+      <span>■ Partial: ${tstats.partial}</span>
+      <span>■ No credit: ${tstats.none}</span>
+    </div>
+  `;
 
   const dimRows = DIMENSIONS.map(d => {
     const s = dimScores[d.id];
@@ -1351,6 +1494,9 @@ function buildReportHTML(){
 
   <h2 class="section">Readiness heatmap</h2>
   <div style="margin-bottom:10px;">${heatmapReportHTML}</div>
+
+  <h2 class="section">Time &amp; Performance Analytics</h2>
+  ${analyticsHTML}
 
   <h2 class="section">Dimension breakdown</h2>
   <table>${dimRows}</table>
