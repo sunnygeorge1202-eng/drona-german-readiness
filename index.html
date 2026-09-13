@@ -8,8 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --green:#0D2B1F;
-    --green-deep:#081A12;
+    --green:#0A0A0A;
+    --green-deep:#000000;
     --cream:#F5F0E8;
     --gold:#C9A84C;
     --gold-soft: rgba(201,168,76,0.18);
@@ -273,7 +273,7 @@
 
   /* ---------- Modal (item detail drill-down) ---------- */
   .modal-overlay{
-    display:none; position:fixed; inset:0; background: rgba(8,26,18,0.82); backdrop-filter: blur(3px);
+    display:none; position:fixed; inset:0; background: rgba(0,0,0,0.82); backdrop-filter: blur(3px);
     z-index: 50; align-items:flex-start; justify-content:center; padding: 40px 16px; overflow-y:auto;
   }
   .modal-overlay.active{ display:flex; }
@@ -1296,7 +1296,7 @@ function buildReportHTML(){
 <style>
   @media print{
     .no-print{ display:none !important; }
-    body{ padding:30px 34px !important; background:#0D2B1F !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    body{ padding:30px 34px !important; background:#0A0A0A !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   }
   body{
     font-family: Georgia, 'Times New Roman', serif;
@@ -1304,7 +1304,7 @@ function buildReportHTML(){
     max-width: 760px;
     margin: 0 auto;
     padding: 50px 40px 80px;
-    background: #0D2B1F;
+    background: #0A0A0A;
   }
   .head{ display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 2px solid #C9A84C; padding-bottom: 22px; margin-bottom: 30px; }
   .head h1{ font-size:1.5rem; margin:0 0 4px; color:#F5F0E8; }
@@ -1321,7 +1321,7 @@ function buildReportHTML(){
   table{ width:100%; border-collapse:collapse; }
   .item-table th{ text-align:left; font-family:Arial,sans-serif; font-size:0.72rem; text-transform:uppercase; color:rgba(245,240,232,0.45); padding-bottom:6px; border-bottom:1px solid rgba(245,240,232,0.14); }
   .foot{ margin-top:50px; text-align:center; font-family:Arial,sans-serif; font-size:0.72rem; color:rgba(245,240,232,0.35); }
-  .print-btn{ font-family: Arial, sans-serif; background:#C9A84C; color:#0D2B1F; border:none; border-radius:8px; padding:12px 20px; font-size:0.9rem; cursor:pointer; margin-bottom:24px; font-weight:600; }
+  .print-btn{ font-family: Arial, sans-serif; background:#C9A84C; color:#0A0A0A; border:none; border-radius:8px; padding:12px 20px; font-size:0.9rem; cursor:pointer; margin-bottom:24px; font-weight:600; }
 </style>
 </head>
 <body>
