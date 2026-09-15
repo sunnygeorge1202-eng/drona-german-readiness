@@ -438,7 +438,7 @@
             <li><b>No going back.</b> Once you submit an answer, it's final — you can't return to change it.</li>
             <li><b>Timed, not rushed.</b> Each question shows a running timer so we can see how long you take — there's no countdown or cutoff.</li>
             <li><b>Save &amp; resume.</b> Your progress saves after every question. Close the tab any time and resume later with your email — your session stays open for 14 days.</li>
-            <li><b>Length.</b> This sample section takes roughly 12–15 minutes.</li>
+            <li><b>Length.</b> This full instrument takes roughly 35–40 minutes across all four sections.</li>
             <li><b>Result.</b> Once every question is answered, you'll see your readiness band and a downloadable report immediately.</li>
           </ul>
         </div>
@@ -568,267 +568,480 @@ const DIMENSIONS = [
   {
     id: "academic",
     name: "Academic Readiness",
-    desc: "A few questions on how you learn, understand new ideas, and study.",
-    estimate: "About 4 minutes",
+    desc: "Learning ability, cognitive reasoning, academic foundation, learning discipline, and study skills.",
+    estimate: "About 8 minutes",
     maxScore: 20,
     items: [
       {
-        id: "ac1", sub: "Learning Ability", type: "mcq", weight: 2,
+        id: "ac-learn1", sub: "Learning Ability — Interpretation", type: "mcq", weight: 2,
         stimulus: "In German workplaces, the 'Meister' system means a senior craftsperson supervises apprentices and signs off on completed work before it is considered finished. An apprentice cannot mark their own work as complete.",
-        prompt: "An apprentice finishes wiring a panel and believes it's correct. What should they do next?",
-        options: [
-          "Move on to the next task",
-          "Ask the Meister to inspect and sign off",
-          "Ask a fellow apprentice to check it",
-          "Mark it complete and note it in the logbook"
-        ],
+        prompt: "Who has final authority to confirm an apprentice's task is complete?",
+        options: ["The apprentice, once satisfied", "The Meister", "Any colleague present", "The HR department"],
         correct: 1
       },
       {
-        id: "ac2", sub: "Learning Ability", type: "mcq", weight: 2,
-        prompt: "A trainee nurse completes a wound dressing. Using the same 'sign-off' principle from before, what should happen before it's considered done?",
-        options: [
-          "The nurse documents it herself",
-          "A supervising Pflegefachkraft reviews it",
-          "The patient confirms it",
-          "Nothing further is needed"
-        ],
+        id: "ac-learn2", sub: "Learning Ability — Transfer", type: "mcq", weight: 2,
+        prompt: "Using the same 'sign-off' principle from before, a trainee nurse completes a wound dressing. What should happen before it's considered done?",
+        options: ["The nurse documents it herself", "A supervising Pflegefachkraft reviews it", "The patient confirms it", "Nothing further is needed"],
         correct: 1
       },
       {
-        id: "ac3", sub: "Cognitive Ability", type: "mcq", weight: 2,
+        id: "ac-learn3", sub: "Learning Ability — Retention", type: "mcq", weight: 2,
+        stimulus: "A supervisor lists the four steps for reporting a workplace near-miss: (1) make the area safe, (2) inform your supervisor, (3) fill the incident form, (4) attend the follow-up review.",
+        prompt: "Based on the sequence above, what is the correct SECOND step after making the area safe?",
+        options: ["Fill the incident form", "Inform your supervisor", "Attend the follow-up review", "Leave the area immediately"],
+        correct: 1
+      },
+      {
+        id: "ac-cog-verbal", sub: "Cognitive Ability — Verbal", type: "mcq", weight: 2,
+        stimulus: "\"Apprentices must complete a logbook entry after every shift. Entries missing for more than three consecutive days must be reported to the training coordinator, who will follow up with the apprentice directly.\"",
+        prompt: "According to the passage, who follows up if logbook entries are missing?",
+        options: ["The apprentice's colleague", "The training coordinator", "The Meister only", "No one — it is optional"],
+        correct: 1
+      },
+      {
+        id: "ac-cog-numerical", sub: "Cognitive Ability — Numerical", type: "mcq", weight: 2,
         prompt: "A training allowance is €950 a month. Rent takes 28% of it. How much remains after rent?",
         options: ["€612", "€684", "€722", "€850"],
         correct: 1
       },
       {
-        id: "ac4", sub: "Cognitive Ability", type: "mcq", weight: 2,
+        id: "ac-cog-logical", sub: "Cognitive Ability — Logical", type: "mcq", weight: 2,
         prompt: "What comes next in this sequence: 2, 6, 12, 20, 30, ?",
         options: ["36", "40", "42", "44"],
         correct: 2
       },
       {
-        id: "ac5", sub: "Academic Foundation", type: "mcq", weight: 2,
+        id: "ac-cog-abstract", sub: "Cognitive Ability — Abstract", type: "mcq", weight: 2,
+        prompt: "Hammer is to Nail as Screwdriver is to ___?",
+        options: ["Wrench", "Screw", "Drill", "Wood"],
+        correct: 1
+      },
+      {
+        id: "ac-cog-infoproc", sub: "Cognitive Ability — Information Processing", type: "mcq", weight: 2,
+        stimulus: "\"Batch 7 ran for 70 minutes; Batch 4 needed 7 repairs; Batch 7 was checked twice more before batch 12 started.\"",
+        prompt: "How many times does the number 7 appear in the passage above?",
+        options: ["2", "3", "4", "5"],
+        correct: 1
+      },
+      {
+        id: "ac-found-literacy", sub: "Academic Foundation — Literacy", type: "mcq", weight: 2,
+        stimulus: "\"All apprentices must wear the assigned safety gear at all times on the workshop floor. Exceptions require written approval from the site supervisor.\"",
+        prompt: "Which of the following is NOT stated in the passage?",
+        options: ["Safety gear is required on the workshop floor", "Exceptions need written approval", "Safety gear is optional after 6pm", "Approval comes from the site supervisor"],
+        correct: 2
+      },
+      {
+        id: "ac-found-numeracy", sub: "Academic Foundation — Numeracy", type: "mcq", weight: 2,
+        prompt: "Convert 2.5 kg to grams.",
+        options: ["25 g", "250 g", "2,500 g", "25,000 g"],
+        correct: 2
+      },
+      {
+        id: "ac-found-science", sub: "Academic Foundation — Science", type: "mcq", weight: 2,
         prompt: "Water boils at a lower temperature at high altitude. Why?",
-        options: [
-          "Air is colder at altitude",
-          "Air pressure is lower, so less energy is needed to boil",
-          "There is less oxygen in the air",
-          "Water is purer at altitude"
-        ],
+        options: ["Air is colder at altitude", "Air pressure is lower, so less energy is needed to boil", "There is less oxygen in the air", "Water is purer at altitude"],
         correct: 1
       },
       {
-        id: "ac6", sub: "Learning Discipline", type: "mcq", weight: 2,
+        id: "ac-discipline1", sub: "Learning Discipline — Persistence", type: "mcq", weight: 2,
         prompt: "You have an exam in one week and are struggling to understand one topic. What is the BEST first step?",
-        options: [
-          "Skip that topic and focus on what you already know",
-          "Ask a teacher or peer to explain it differently",
-          "Re-read the same notes repeatedly until it makes sense",
-          "Wait and hope it's not heavily tested"
-        ],
+        options: ["Skip that topic and focus on what you already know", "Ask a teacher or peer to explain it differently", "Re-read the same notes repeatedly until it makes sense", "Wait and hope it's not heavily tested"],
         correct: 1
       },
       {
-        id: "ac7", sub: "Study Skills", type: "likert", weight: 2,
+        id: "ac-discipline2", sub: "Learning Discipline — Time Management", type: "mcq", weight: 2,
+        prompt: "You have three assignments due this week with different deadlines. What's the best approach?",
+        options: ["Work on whichever feels easiest first", "Plan backwards from each deadline and prioritise accordingly", "Start all three at once", "Wait until the day before each is due"],
+        correct: 1
+      },
+      {
+        id: "ac-study1", sub: "Study Skills — Information Absorption", type: "likert", weight: 2,
         prompt: "After watching a training video once, I can usually summarize its key points.",
         scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
+      },
+      {
+        id: "ac-study2", sub: "Study Skills — Examination Readiness", type: "mcq", weight: 2,
+        prompt: "You're given a written manual with no diagrams for a new task. What's the best approach?",
+        options: ["Skim it once and start immediately", "Read it carefully, note unclear points, and ask before starting", "Ignore it and learn by trial and error", "Wait for someone to explain it verbally instead"],
+        correct: 1
       }
     ]
   },
   {
     id: "occupational",
     name: "Technical & Occupational Aptitude",
-    desc: "Questions on how you think about mechanical, spatial, and practical problems — and what kind of work environment fits you.",
-    estimate: "About 4 minutes",
+    desc: "Thirteen fundamental aptitudes, plus occupational interest and work-style preferences that map to trade clusters.",
+    estimate: "About 10 minutes",
     maxScore: 20,
     items: [
       {
-        id: "oc1", sub: "Mechanical Aptitude", type: "mcq", weight: 2,
-        prompt: "Two connected gears: Gear A has 10 teeth and turns clockwise. Gear B has 20 teeth. Which way does Gear B turn, and how does its speed compare to Gear A?",
-        options: [
-          "Clockwise, faster than A",
-          "Counter-clockwise, slower than A",
-          "Clockwise, same speed as A",
-          "Counter-clockwise, faster than A"
-        ],
+        id: "fa-verbal", sub: "Verbal Aptitude", type: "mcq", weight: 2,
+        stimulus: "\"The supervisor asked the apprentice to substitute the damaged part before the inspection.\"",
+        prompt: "'Substitute' in this sentence most nearly means:",
+        options: ["Repair", "Replace", "Remove", "Report"],
         correct: 1
       },
       {
-        id: "oc2", sub: "Observation Aptitude", type: "mcq", weight: 2,
-        prompt: "A technician checks two versions of the same wiring diagram, one from last week and one from today. Three connections are labeled differently between the two. What should the technician do first?",
-        options: [
-          "Assume today's version is correct and proceed",
-          "Flag the discrepancy before proceeding",
-          "Use whichever version is more recent without checking",
-          "Ignore it since it's probably a formatting issue"
-        ],
+        id: "fa-numerical", sub: "Numerical Aptitude", type: "mcq", weight: 2,
+        prompt: "A shift lasts 8 hours with a 30-minute break. How many hours are actually worked?",
+        options: ["7 hours", "7.5 hours", "8 hours", "8.5 hours"],
         correct: 1
       },
       {
-        id: "oc3", sub: "Occupational Interest", type: "forced-choice", weight: 3,
-        prompt: "Which would you rather spend a workday doing?",
-        options: [
-          "Fixing a mechanical fault on a factory floor",
-          "Helping a patient understand their care plan"
-        ]
+        id: "fa-abstract", sub: "Abstract Reasoning", type: "mcq", weight: 2,
+        prompt: "What comes next in this shape sequence: Triangle (3 sides), Square (4 sides), Pentagon (5 sides), Hexagon (6 sides), ?",
+        options: ["Octagon (8 sides)", "Heptagon (7 sides)", "Circle", "Hexagon again"],
+        correct: 1
       },
       {
-        id: "oc4", sub: "Occupational Interest", type: "forced-choice", weight: 3,
-        prompt: "Which would you rather spend a workday doing?",
-        options: [
-          "Organising schedules and paperwork in an office",
-          "Working outdoors with plants or land"
-        ]
-      },
-      {
-        id: "oc5", sub: "Spatial Aptitude", type: "mcq", weight: 2,
+        id: "fa-spatial", sub: "Spatial Aptitude", type: "mcq", weight: 2,
         prompt: "A flat cross-shaped piece of paper is folded along its lines to form a closed shape. What shape does it form?",
         options: ["A pyramid", "A cube", "A cylinder", "A cone"],
         correct: 1
+      },
+      {
+        id: "fa-mechanical", sub: "Mechanical Aptitude", type: "mcq", weight: 2,
+        prompt: "Two connected gears: Gear A has 10 teeth and turns clockwise. Gear B has 20 teeth. Which way does Gear B turn, and how does its speed compare to Gear A?",
+        options: ["Clockwise, faster than A", "Counter-clockwise, slower than A", "Clockwise, same speed as A", "Counter-clockwise, faster than A"],
+        correct: 1
+      },
+      {
+        id: "fa-technical", sub: "Technical Aptitude", type: "mcq", weight: 2,
+        prompt: "In a simple electrical circuit, if the switch is opened, what happens to the current?",
+        options: ["It increases", "It stops flowing", "It reverses direction", "It stays the same"],
+        correct: 1
+      },
+      {
+        id: "fa-observation", sub: "Observation Aptitude", type: "mcq", weight: 2,
+        prompt: "A technician checks two versions of the same wiring diagram, one from last week and one from today. Three connections are labeled differently between the two. What should the technician do first?",
+        options: ["Assume today's version is correct and proceed", "Flag the discrepancy before proceeding", "Use whichever version is more recent without checking", "Ignore it since it's probably a formatting issue"],
+        correct: 1
+      },
+      {
+        id: "fa-memory", sub: "Memory Aptitude", type: "mcq", weight: 2,
+        stimulus: "Tool list: Wrench, Chisel, File, Calliper, Mallet.",
+        prompt: "Which of the following was NOT in the tool list above?",
+        options: ["Chisel", "Calliper", "Screwdriver", "Mallet"],
+        correct: 2
+      },
+      {
+        id: "fa-manual", sub: "Manual Dexterity", type: "likert", weight: 2,
+        prompt: "I am confident working with my hands on precise, detailed tasks (e.g. small parts, fine adjustments).",
+        scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
+      },
+      {
+        id: "fa-social", sub: "Social Aptitude", type: "mcq", weight: 2,
+        prompt: "A new team member is struggling to understand instructions in a language they're still learning. What's the best response?",
+        options: ["Repeat the same instruction louder", "Rephrase simply, and check understanding", "Let them figure it out themselves", "Report them to a supervisor"],
+        correct: 1
+      },
+      {
+        id: "fa-service", sub: "Service Aptitude", type: "mcq", weight: 2,
+        prompt: "A customer or patient seems frustrated but hasn't said why. What's the best first move?",
+        options: ["Wait for them to complain formally", "Ask directly how you can help", "Ignore it and continue your task", "Refer them elsewhere immediately"],
+        correct: 1
+      },
+      {
+        id: "fa-organisational", sub: "Organisational Aptitude", type: "mcq", weight: 2,
+        prompt: "You have three tasks due today with different deadlines. What's the best approach?",
+        options: ["Do them in the order they were assigned", "Plan by deadline and urgency, then execute", "Do the easiest one first", "Ask someone else to decide for you"],
+        correct: 1
+      },
+      {
+        id: "fa-creative", sub: "Creative Aptitude", type: "likert", weight: 2,
+        prompt: "I often think of more than one way to solve a practical problem.",
+        scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
+      },
+      {
+        id: "oi-people-machines", sub: "Occupational Interest — Working With", type: "forced-choice", weight: 2,
+        prompt: "Which would you rather spend a workday doing?",
+        options: ["Fixing a mechanical fault on a factory floor", "Helping a patient understand their care plan"]
+      },
+      {
+        id: "oi-data-nature", sub: "Occupational Interest — Working With", type: "forced-choice", weight: 2,
+        prompt: "Which would you rather spend a workday doing?",
+        options: ["Organising schedules and paperwork in an office", "Working outdoors with plants or land"]
+      },
+      {
+        id: "oi-materials-tech", sub: "Occupational Interest — Working With", type: "forced-choice", weight: 2,
+        prompt: "Which would you rather spend a workday doing?",
+        options: ["Shaping and building with raw materials", "Working with computers and software systems"]
+      },
+      {
+        id: "oi-creative-structured", sub: "Occupational Interest — Working With", type: "forced-choice", weight: 2,
+        prompt: "Which would you rather spend a workday doing?",
+        options: ["Designing or creating something new", "Following a fixed, precise procedure exactly"]
+      },
+      {
+        id: "oi-env-hospital-factory", sub: "Occupational Interest — Work Environment", type: "forced-choice", weight: 2,
+        prompt: "Which work environment appeals to you more?",
+        options: ["A hospital or care setting", "A factory or workshop floor"]
+      },
+      {
+        id: "oi-env-office-outdoor", sub: "Occupational Interest — Work Environment", type: "forced-choice", weight: 2,
+        prompt: "Which work environment appeals to you more?",
+        options: ["An office", "Outdoors"]
+      },
+      {
+        id: "oi-env-lab-retail", sub: "Occupational Interest — Work Environment", type: "forced-choice", weight: 2,
+        prompt: "Which work environment appeals to you more?",
+        options: ["A laboratory", "A retail or customer-facing setting"]
+      },
+      {
+        id: "oi-style-team-independent", sub: "Occupational Interest — Work Style", type: "forced-choice", weight: 2,
+        prompt: "Which describes your preferred way of working?",
+        options: ["Team-based, working closely with others", "Independent, working mostly on your own"]
+      },
+      {
+        id: "oi-style-structured-dynamic", sub: "Occupational Interest — Work Style", type: "forced-choice", weight: 2,
+        prompt: "Which describes your preferred way of working?",
+        options: ["Structured, with a predictable routine", "Dynamic, with tasks that change day to day"]
+      },
+      {
+        id: "oi-style-customer-technical", sub: "Occupational Interest — Work Style", type: "forced-choice", weight: 2,
+        prompt: "Which describes your preferred way of working?",
+        options: ["Customer-facing, interacting with people regularly", "Technical problem-solving, mostly with systems or machines"]
       }
     ]
   },
   {
     id: "germany",
     name: "Germany Readiness",
-    desc: "Questions on German language, culture, daily life, and the legal and financial basics of living in Germany.",
-    estimate: "About 5 minutes",
+    desc: "Language, cultural adaptability, workplace norms, daily life, legal and administrative knowledge, financial readiness, and psychological preparedness.",
+    estimate: "About 11 minutes",
     maxScore: 35,
     items: [
       {
-        id: "gr1", sub: "Workplace German", type: "mcq", weight: 3,
+        id: "gr-lang1", sub: "Workplace German", type: "mcq", weight: 3,
         prompt: "You receive this message from your employer: \"Bitte melden Sie sich krank vor 9 Uhr.\" What should you do?",
-        options: [
-          "Come to work by 9am regardless",
-          "Call in sick before 9am",
-          "Send a doctor's note by post",
-          "Nothing — this is just a reminder"
-        ],
+        options: ["Come to work by 9am regardless", "Call in sick before 9am", "Send a doctor's note by post", "Nothing — this is just a reminder"],
         correct: 1
       },
       {
-        id: "gr2", sub: "Cultural Readiness", type: "mcq", weight: 3,
+        id: "gr-lang2", sub: "Functional German", type: "mcq", weight: 3,
+        prompt: "A receptionist asks: \"Sind Sie gesetzlich oder privat versichert?\" What are they asking?",
+        options: ["Whether you have public or private health insurance", "Whether you have a residence permit", "Whether you are employed", "Whether you speak German"],
+        correct: 0
+      },
+      {
+        id: "gr-lang3", sub: "German Language Readiness", type: "likert", weight: 3,
+        prompt: "I can follow a spoken safety briefing in German without needing it repeated.",
+        scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
+      },
+      {
+        id: "gr-cult1", sub: "Cultural Readiness", type: "mcq", weight: 3,
         prompt: "Your German colleague tells you directly that your work has an error, without softening the message. Your first reaction is closest to:",
-        options: [
-          "They are being rude to me",
-          "This is direct, task-focused feedback — normal here",
-          "I should stop asking them for help",
-          "I should report this to a supervisor"
-        ],
+        options: ["They are being rude to me", "This is direct, task-focused feedback — normal here", "I should stop asking them for help", "I should report this to a supervisor"],
         correct: 1
       },
       {
-        id: "gr3", sub: "Workplace Readiness", type: "mcq", weight: 3,
+        id: "gr-cult2", sub: "German Values", type: "mcq", weight: 3,
+        prompt: "Your German colleagues consistently arrive a few minutes before shift start, not exactly on time. What does this most likely reflect?",
+        options: ["A workplace rule requiring early arrival", "A professional norm of valuing punctuality with margin", "A misunderstanding of the schedule", "Nothing significant"],
+        correct: 1
+      },
+      {
+        id: "gr-cult3", sub: "Cultural Adaptability", type: "likert", weight: 3,
+        prompt: "I am comfortable working alongside colleagues who hold very different religious or cultural practices from my own.",
+        scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
+      },
+      {
+        id: "gr-work1", sub: "German Workplace Readiness", type: "mcq", weight: 3,
         prompt: "If you're sick and can't come to work in Germany, what must you typically give your employer within a few days?",
-        options: [
-          "A verbal explanation only",
-          "A doctor's certificate (Arbeitsunfähigkeitsbescheinigung)",
-          "Nothing, if it's a single day",
-          "A police report"
-        ],
+        options: ["A verbal explanation only", "A doctor's certificate (Arbeitsunfähigkeitsbescheinigung)", "Nothing, if it's a single day", "A police report"],
         correct: 1
       },
       {
-        id: "gr4", sub: "Daily Life Readiness", type: "mcq", weight: 3,
+        id: "gr-work2", sub: "Apprentice Rights", type: "mcq", weight: 3,
+        prompt: "Under a German Ausbildung contract, who is primarily responsible for ensuring you receive structured training rather than being used only as general labour?",
+        options: ["The apprentice must arrange this themselves", "The training company, regulated by law", "No one — it depends entirely on the employer", "The apprentice's family"],
+        correct: 1
+      },
+      {
+        id: "gr-work3", sub: "Workplace Hierarchy", type: "mcq", weight: 3,
+        prompt: "Your Meister gives an instruction that differs from what a senior colleague told you yesterday. What should you do?",
+        options: ["Follow whichever instruction came first", "Follow the Meister's instruction, or ask for clarification if unsure", "Do both at once", "Ignore both and decide yourself"],
+        correct: 1
+      },
+      {
+        id: "gr-life1", sub: "Daily Life Readiness", type: "mcq", weight: 3,
         prompt: "What is \"Anmeldung\", and roughly when should it be done after moving to a new German address?",
-        options: [
-          "A gym membership; within 30 days",
-          "Address registration; usually within 14 days",
-          "A phone contract; within a week",
-          "A bank account; within 90 days"
-        ],
+        options: ["A gym membership; within 30 days", "Address registration; usually within 14 days", "A phone contract; within a week", "A bank account; within 90 days"],
         correct: 1
       },
       {
-        id: "gr5", sub: "Legal & Administrative", type: "mcq", weight: 3,
+        id: "gr-life2", sub: "Waste Segregation", type: "mcq", weight: 3,
+        prompt: "Which bin is used for food and kitchen waste in a standard German household system?",
+        options: ["Biotonne (organic waste bin)", "Gelber Sack (yellow bag)", "Restmüll (general waste)", "Altpapier (paper bin)"],
+        correct: 0
+      },
+      {
+        id: "gr-life3", sub: "Transportation", type: "mcq", weight: 3,
+        prompt: "You need to travel by regional train in Germany. What is the most common way to purchase and validate a ticket today?",
+        options: ["Buy on the platform only, no app needed", "Use a rail or transit app for digital ticketing", "Tickets are free for apprentices", "Pay the conductor in cash only"],
+        correct: 1
+      },
+      {
+        id: "gr-legal1", sub: "Legal & Administrative Readiness", type: "mcq", weight: 3,
         prompt: "What is a Tax ID (Steuer-ID) used for?",
-        options: [
-          "Only for people who own a business",
-          "Identifying you for tax and payroll purposes — everyone needs one",
-          "Only needed if you plan to leave Germany",
-          "It replaces your passport for travel"
-        ],
+        options: ["Only for people who own a business", "Identifying you for tax and payroll purposes — everyone needs one", "Only needed if you plan to leave Germany", "It replaces your passport for travel"],
         correct: 1
       },
       {
-        id: "gr6", sub: "Financial Readiness", type: "mcq", weight: 3,
+        id: "gr-legal2", sub: "Health Insurance", type: "mcq", weight: 3,
+        prompt: "In Germany, health insurance for an apprentice is typically:",
+        options: ["Optional", "Mandatory, often arranged via the training company", "Only needed for serious illness", "Provided free with no registration"],
+        correct: 1
+      },
+      {
+        id: "gr-legal3", sub: "Residence Permit", type: "mcq", weight: 3,
+        prompt: "As a non-EU apprentice, which document allows you to legally stay in Germany for the duration of your Ausbildung?",
+        options: ["A tourist visa", "A residence permit tied to the training purpose (Aufenthaltstitel)", "No document is needed for the first year", "A work contract alone is sufficient"],
+        correct: 1
+      },
+      {
+        id: "gr-fin1", sub: "Financial Readiness", type: "mcq", weight: 3,
         prompt: "Your training allowance (Ausbildungsvergütung) is €950/month. A shared room in your target city averages €400/month. Roughly what % of your income goes to rent?",
         options: ["28%", "35%", "42%", "50%"],
         correct: 2
       },
       {
-        id: "gr7", sub: "Financial Readiness", type: "likert", weight: 3,
+        id: "gr-fin2", sub: "Budgeting", type: "likert", weight: 3,
         prompt: "I have a clear monthly budget plan for my first 6 months in Germany.",
         scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
       },
       {
-        id: "gr8", sub: "Psychological Readiness", type: "likert", weight: 3,
+        id: "gr-fin3", sub: "Ausbildungsvergütung Awareness", type: "mcq", weight: 3,
+        prompt: "Which best describes how the training allowance (Ausbildungsvergütung) usually changes over a 3-year Ausbildung?",
+        options: ["It increases each year", "It stays flat throughout", "It decreases each year", "It is paid only in the final year"],
+        correct: 0
+      },
+      {
+        id: "gr-psych1", sub: "Support-Seeking Behaviour", type: "likert", weight: 3,
         prompt: "When I feel overwhelmed, I know at least one specific person or service I would reach out to.",
         scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
       },
       {
-        id: "gr9", sub: "Psychological Readiness", type: "likert", weight: 3, reverse: true,
+        id: "gr-psych2", sub: "Emotional Resilience", type: "likert", weight: 3, reverse: true,
         prompt: "I rarely feel anxious about big life changes.",
         scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
+      },
+      {
+        id: "gr-psych3", sub: "Independence", type: "likert", weight: 3,
+        prompt: "I am comfortable making everyday decisions (housing, budgeting, healthcare) without checking with my family first.",
+        scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
+      },
+      {
+        id: "gr-psych4", sub: "Motivation & Migration Readiness", type: "mcq", weight: 3,
+        prompt: "After 3 months in Germany, you are homesick and finding the language difficult. What is the most constructive next step?",
+        options: ["Seek support from a mentor or peer group and continue", "Decide to give up and go home", "Isolate yourself and push through alone silently", "Ignore the feelings and hope they pass"],
+        correct: 0
       }
     ]
   },
   {
     id: "employability",
     name: "Employability Readiness",
-    desc: "How you handle mistakes, teamwork, feedback, and everyday professional situations.",
-    estimate: "About 4 minutes",
+    desc: "Professional behaviour, communication, teamwork, self-management, problem solving, learning agility, digital skills, and career management.",
+    estimate: "About 9 minutes",
     maxScore: 25,
     items: [
       {
-        id: "em1", sub: "Professional Behaviour", type: "mcq", weight: 3,
+        id: "em-prof1", sub: "Professional Behaviour — Accountability", type: "mcq", weight: 3,
         prompt: "You made an error that affected a colleague's work. What do you do?",
-        options: [
-          "Say nothing unless asked",
-          "Immediately inform them and help fix it",
-          "Fix it quietly yourself before anyone notices",
-          "Explain that it wasn't really your fault"
-        ],
+        options: ["Say nothing unless asked", "Immediately inform them and help fix it", "Fix it quietly yourself before anyone notices", "Explain that it wasn't really your fault"],
         correct: 1
       },
       {
-        id: "em2", sub: "Communication", type: "mcq", weight: 3,
+        id: "em-prof2", sub: "Professional Behaviour — Reliability", type: "likert", weight: 3,
+        prompt: "I complete tasks I've committed to, even when no one is checking.",
+        scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
+      },
+      {
+        id: "em-prof3", sub: "Professional Behaviour — Integrity", type: "mcq", weight: 3,
+        prompt: "You accidentally see a colleague's confidential file left open. What's the appropriate action?",
+        options: ["Read it since it's already open", "Don't read further, close it, and mention the exposure to a supervisor", "Discuss what you saw with coworkers", "Take a photo in case it's useful later"],
+        correct: 1
+      },
+      {
+        id: "em-comm1", sub: "Communication Skills", type: "mcq", weight: 3,
         prompt: "A customer is frustrated and speaking quickly. Your best first move is to:",
-        options: [
-          "Interrupt to correct them",
-          "Let them finish, then summarize what you heard",
-          "Refer them elsewhere immediately",
-          "Stay silent until they stop"
-        ],
+        options: ["Interrupt to correct them", "Let them finish, then summarize what you heard", "Refer them elsewhere immediately", "Stay silent until they stop"],
         correct: 1
       },
       {
-        id: "em3", sub: "Self-Management", type: "likert", weight: 3,
+        id: "em-comm2", sub: "Written Communication", type: "likert", weight: 3,
+        prompt: "When reporting a problem at work, I write clear, specific messages rather than vague ones.",
+        scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
+      },
+      {
+        id: "em-team1", sub: "Teamwork — Conflict Management", type: "mcq", weight: 3,
+        prompt: "A teammate disagrees with your approach to a task. What's the most constructive response?",
+        options: ["Discuss it and find a middle ground", "Insist that you're right", "Avoid the conversation entirely", "Go over their head immediately"],
+        correct: 0
+      },
+      {
+        id: "em-team2", sub: "Teamwork — Cooperation", type: "likert", weight: 3,
+        prompt: "I proactively share information that could help my teammates do their job better.",
+        scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
+      },
+      {
+        id: "em-self1", sub: "Self-Management — Time", type: "likert", weight: 3,
         prompt: "I usually plan my work for the day before I start.",
         scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
       },
       {
-        id: "em4", sub: "Learning Agility", type: "mcq", weight: 3,
+        id: "em-self2", sub: "Self-Management — Stress", type: "mcq", weight: 3,
+        prompt: "You have two urgent deadlines on the same day. What's the best first step?",
+        options: ["Prioritise and communicate about the timeline", "Panic and rush both at once", "Ignore one silently", "Ask someone else to handle it without discussion"],
+        correct: 0
+      },
+      {
+        id: "em-prob1", sub: "Problem Solving — Root Cause", type: "mcq", weight: 3,
+        prompt: "A machine keeps stopping unexpectedly. Two colleagues suggest different quick fixes without checking why it's happening. What's the best approach?",
+        options: ["Investigate the root cause before fixing", "Apply both fixes at once", "Pick whichever fix is faster", "Ignore it until it stops completely"],
+        correct: 0
+      },
+      {
+        id: "em-prob2", sub: "Problem Solving — Decision Making", type: "mcq", weight: 3,
+        prompt: "You must choose between two suppliers for a time-sensitive task: one cheaper but slower, one pricier but reliable. What matters most in this decision?",
+        options: ["Weighing cost against the cost of delay for this specific situation", "Always choosing the cheaper option", "Always choosing the faster option", "Deciding at random"],
+        correct: 0
+      },
+      {
+        id: "em-learn1", sub: "Learning Agility — Coachability", type: "mcq", weight: 3,
         prompt: "When you receive critical feedback, your first reaction is usually to:",
-        options: [
-          "Feel discouraged and avoid the topic",
-          "Consider it and think about how to apply it",
-          "Explain why the feedback isn't quite fair",
-          "Ignore it if you disagree"
-        ],
+        options: ["Feel discouraged and avoid the topic", "Consider it and think about how to apply it", "Explain why the feedback isn't quite fair", "Ignore it if you disagree"],
         correct: 1
       },
       {
-        id: "em5", sub: "Digital Employability", type: "mcq", weight: 3,
+        id: "em-learn2", sub: "Learning Agility — Curiosity", type: "likert", weight: 3,
+        prompt: "I ask questions to understand how something works, even if it's not required for my task.",
+        scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
+      },
+      {
+        id: "em-dig1", sub: "Digital Employability — Communication Tools", type: "mcq", weight: 3,
         prompt: "Which is the safest practice for a work email?",
-        options: [
-          "Click links from unknown senders to check them",
-          "Verify the sender before clicking any link",
-          "Share your password if IT asks by email",
-          "Forward suspicious emails to friends"
-        ],
+        options: ["Click links from unknown senders to check them", "Verify the sender before clicking any link", "Share your password if IT asks by email", "Forward suspicious emails to friends"],
         correct: 1
+      },
+      {
+        id: "em-dig2", sub: "Digital Employability — Information Management", type: "mcq", weight: 3,
+        prompt: "You need to find a document you saved last month among hundreds of files. What habit would have made this easiest?",
+        options: ["A consistent folder structure and naming convention", "Saving everything to the desktop", "Emailing yourself copies of everything", "Not saving files at all"],
+        correct: 0
+      },
+      {
+        id: "em-career1", sub: "Career Management — Job Search Skills", type: "mcq", weight: 3,
+        prompt: "Which of these best describes a well-structured CV bullet point?",
+        options: ["A vague general statement about being hardworking", "A specific result or responsibility with a concrete detail", "A long paragraph covering the whole job", "Just a job title with no detail"],
+        correct: 1
+      },
+      {
+        id: "em-career2", sub: "Career Management — Career Awareness", type: "likert", weight: 3,
+        prompt: "I have a general sense of what skills I want to build over the next 1–2 years.",
+        scale: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"]
       }
     ]
   }
@@ -1380,8 +1593,8 @@ function renderResults(){
 
   const clusterEl = document.getElementById("clusterList");
   clusterEl.innerHTML = "";
-  const mechScore = state.responses["oc1"] ? state.responses["oc1"].score/2 : 0.5;
-  const spatialScore = state.responses["oc5"] ? state.responses["oc5"].score/2 : 0.5;
+  const mechScore = state.responses["fa-mechanical"] ? state.responses["fa-mechanical"].score/2 : 0.5;
+  const spatialScore = state.responses["fa-spatial"] ? state.responses["fa-spatial"].score/2 : 0.5;
   const results = Object.entries(CLUSTER_WEIGHTS).map(([name, w]) => {
     const fit = Math.round(((mechScore*w.mechanical) + (spatialScore*w.spatial)) / (w.mechanical+w.spatial) * 100);
     return { name, fit };
