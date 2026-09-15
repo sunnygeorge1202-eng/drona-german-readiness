@@ -78,7 +78,7 @@
       radial-gradient(ellipse 700px 500px at 100% 100%, rgba(201,168,76,0.06), transparent 60%),
       var(--green-deep);
   }
-  #screen-landing{ justify-content:center; align-items:center; text-align:center; flex:1; }
+  #screen-home{ justify-content:center; align-items:center; text-align:center; flex:1; }
   .login-card{
     width:100%; max-width: 440px;
     border: 1px solid rgba(201,168,76,0.35);
@@ -88,10 +88,37 @@
     box-shadow: 0 30px 60px -25px rgba(0,0,0,0.6), 0 0 0 1px rgba(245,240,232,0.03) inset;
     text-align:left;
   }
+  .login-card.home-card{ max-width: 520px; }
   .login-mark-logo{ display:block; width: 64px; height:64px; object-fit:contain; margin: 0 auto 18px; }
   .login-eyebrow{ text-align:center; font-size:0.78rem; opacity:0.55; margin-bottom: 8px; letter-spacing: 0.03em; }
-  #screen-landing h1{ font-size: 1.7rem; line-height:1.3; margin-bottom: 10px; text-align:center; }
-  #screen-landing p.lede{ font-size:0.92rem; line-height:1.6; opacity:0.7; text-align:center; margin: 0 auto 28px; max-width: 40ch; }
+  #screen-home h1{ font-size: 1.7rem; line-height:1.3; margin-bottom: 10px; text-align:center; }
+  #screen-home p.lede{ font-size:0.92rem; line-height:1.6; opacity:0.7; text-align:center; margin: 0 auto 28px; max-width: 40ch; }
+
+  .home-tabs{
+    display:flex; gap:6px; background: rgba(0,0,0,0.25); border: 1px solid var(--line);
+    border-radius: 10px; padding: 4px; margin-bottom: 26px;
+  }
+  .tab-btn{
+    flex:1; background:none; border:none; color: var(--cream); opacity:0.55;
+    font-family:'Inter',sans-serif; font-weight:600; font-size:0.88rem;
+    padding: 10px 12px; border-radius: 7px; cursor:pointer; transition: all 0.15s ease;
+  }
+  .tab-btn:hover{ opacity:0.8; }
+  .tab-btn.active{ background: var(--gold); color: var(--green-deep); opacity:1; }
+
+  .tab-panel{ display:none; }
+  .tab-panel.active{ display:block; animation: fadein 0.25s ease; }
+  @keyframes fadein{ from{ opacity:0; transform: translateY(4px); } to{ opacity:1; transform:none; } }
+
+  .about-p{ font-size:0.92rem; line-height:1.65; opacity:0.85; margin: 0 0 16px; }
+  .about-p strong{ color: var(--cream); opacity:1; }
+  .about-section-title{
+    font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color: var(--gold);
+    margin: 26px 0 12px; font-weight:600;
+  }
+  .about-cta{ margin: 22px 0 6px; }
+  .about-link{ color: var(--gold); text-decoration:underline; }
+
   .divider{ height:1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent); margin: 26px 0 24px; }
   .dim-list{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom: 8px; }
   .dim-chip{ border:1px solid var(--line); border-radius:10px; padding: 12px 14px; font-size:0.85rem; }
@@ -325,48 +352,80 @@
   </div>
 
   <!-- LANDING / LOGIN -->
-  <div class="screen active" id="screen-landing">
-    <div class="login-card">
+  <div class="screen active" id="screen-home">
+    <div class="login-card home-card">
       <img src="" class="login-mark-logo" id="loginLogo1" alt="Dronafy">
       <div class="login-eyebrow">Drona German Readiness Portal</div>
-      <h1>German Readiness Assessment</h1>
-      <p class="lede">A structured evaluation across four dimensions — academic foundation, occupational aptitude, Germany readiness, and employability.</p>
+      <h1>Centre for Career Intelligence &amp; International Mobility</h1>
+      <p class="lede">A dependable path from India into study, training, and work in Germany.</p>
 
-      <div class="dim-list">
-        <div class="dim-chip"><b>Academic</b><span>Learning &amp; cognitive foundation</span></div>
-        <div class="dim-chip"><b>Occupational</b><span>Aptitude &amp; trade fit</span></div>
-        <div class="dim-chip"><b>Germany Readiness</b><span>Language, culture, life, law</span></div>
-        <div class="dim-chip"><b>Employability</b><span>Work habits &amp; behaviour</span></div>
+      <div class="home-tabs">
+        <button class="tab-btn active" id="tabBtnAbout" data-tab="about">About</button>
+        <button class="tab-btn" id="tabBtnAssessment" data-tab="assessment">Assessment</button>
       </div>
 
-      <div class="divider"></div>
+      <!-- ABOUT TAB -->
+      <div class="tab-panel active" id="tab-about">
+        <p class="about-p">Every year, thousands of young Indians look toward Germany: for a degree, for Ausbildung, or for a chance to search for work under the Opportunity Card. What they often meet first is noise — unofficial agents, one giant invoice, study and vocational paths mixed together as if they were the same thing.</p>
+        <p class="about-p"><strong>India to Germany</strong> is being built as the opposite of that. A single place someone can depend on. You arrive, you see three clear doors, and you understand the journey before anyone asks you to register or pay.</p>
 
-      <div class="instructions-block">
-        <div class="instructions-title">Before you begin</div>
-        <ul class="instructions-list">
-          <li><b>Question map.</b> After you begin, you'll see every question laid out in a map. Answer them in any order you like.</li>
-          <li><b>No going back.</b> Once you submit an answer, it's final — you can't return to change it.</li>
-          <li><b>Timed, not rushed.</b> Each question shows a running timer so we can see how long you take — there's no countdown or cutoff.</li>
-          <li><b>Save &amp; resume.</b> Your progress saves after every question. Close the tab any time and resume later with your email — your session stays open for 14 days.</li>
-          <li><b>Length.</b> This sample section takes roughly 12–15 minutes.</li>
-          <li><b>Result.</b> Once every question is answered, you'll see your readiness band and a downloadable report immediately.</li>
-        </ul>
+        <div class="about-section-title">Three doors</div>
+        <div class="dim-list">
+          <div class="dim-chip"><b>Ausbildung</b><span>Dual vocational training — a company, a school, a trade</span></div>
+          <div class="dim-chip"><b>University</b><span>A German degree path, recognition &amp; language first</span></div>
+          <div class="dim-chip"><b>Opportunity Card</b><span>A legal search stay, not a job in hand</span></div>
+          <div class="dim-chip"><b>Readiness</b><span>Assessments name the gap and the next step</span></div>
+        </div>
+
+        <p class="about-p">German readiness sits on the path, not outside it. Assessments for academic, technical, language, and employability readiness point to the next step. Failed B2 does not mean you are thrown out — it means the gap is named, and the path continues.</p>
+
+        <button class="btn about-cta" id="aboutCtaBtn">Take the readiness assessment →</button>
+
+        <div class="about-section-title">Concept developer</div>
+        <p class="about-p"><strong>Vinod Velayudhan</strong> is a policy strategist, systems architect, and institution builder with nearly three decades of experience across public policy, governance reform, workforce development, and international mobility. As former COO of the Kerala Academy for Skills Excellence, he designed Kerala's decentralised skill governance framework and led major workforce planning reforms.</p>
+
+        <div class="about-section-title">Write to us</div>
+        <p class="about-p"><a class="about-link" href="mailto:ciim@witbusiness.in">ciim@witbusiness.in</a></p>
       </div>
 
-      <div class="divider"></div>
+      <!-- ASSESSMENT TAB -->
+      <div class="tab-panel" id="tab-assessment">
+        <div class="dim-list">
+          <div class="dim-chip"><b>Academic</b><span>Learning &amp; cognitive foundation</span></div>
+          <div class="dim-chip"><b>Occupational</b><span>Aptitude &amp; trade fit</span></div>
+          <div class="dim-chip"><b>Germany Readiness</b><span>Language, culture, life, law</span></div>
+          <div class="dim-chip"><b>Employability</b><span>Work habits &amp; behaviour</span></div>
+        </div>
 
-      <div class="field-group">
-        <label class="field-label" for="nameInput">FULL NAME</label>
-        <input type="text" id="nameInput" placeholder="As it should appear on your report" autocomplete="name">
-      </div>
-      <div class="field-group">
-        <label class="field-label" for="emailInput">EMAIL</label>
-        <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="email">
-      </div>
+        <div class="divider"></div>
 
-      <button class="btn" id="startBtn">Begin Assessment</button>
-      <div class="link-row">Already started? <button class="linklike" id="resumeLink">Resume with your email</button></div>
-      <div class="login-foot-note">Your progress is saved automatically as you go.<br>Sessions remain open for 14 days.</div>
+        <div class="instructions-block">
+          <div class="instructions-title">Before you begin</div>
+          <ul class="instructions-list">
+            <li><b>Question map.</b> After you begin, you'll see every question laid out in a map. Answer them in any order you like.</li>
+            <li><b>No going back.</b> Once you submit an answer, it's final — you can't return to change it.</li>
+            <li><b>Timed, not rushed.</b> Each question shows a running timer so we can see how long you take — there's no countdown or cutoff.</li>
+            <li><b>Save &amp; resume.</b> Your progress saves after every question. Close the tab any time and resume later with your email — your session stays open for 14 days.</li>
+            <li><b>Length.</b> This sample section takes roughly 12–15 minutes.</li>
+            <li><b>Result.</b> Once every question is answered, you'll see your readiness band and a downloadable report immediately.</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field-group">
+          <label class="field-label" for="nameInput">FULL NAME</label>
+          <input type="text" id="nameInput" placeholder="As it should appear on your report" autocomplete="name">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="emailInput">EMAIL</label>
+          <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="email">
+        </div>
+
+        <button class="btn" id="startBtn">Begin Assessment</button>
+        <div class="link-row">Already started? <button class="linklike" id="resumeLink">Resume with your email</button></div>
+        <div class="login-foot-note">Your progress is saved automatically as you go.<br>Sessions remain open for 14 days.</div>
+      </div>
     </div>
   </div>
 
@@ -802,7 +861,7 @@ document.querySelectorAll(".screen").forEach(s => screens[s.id] = s);
 function showScreen(id){
   Object.values(screens).forEach(s => s.classList.remove("active"));
   screens[id].classList.add("active");
-  document.body.classList.toggle("on-landing", id === "screen-landing" || id === "screen-resume");
+  document.body.classList.toggle("on-landing", id === "screen-home" || id === "screen-resume");
   if(id !== "screen-question"){ clearInterval(timerInterval); }
 }
 
@@ -816,6 +875,16 @@ function updateExpiryPill(){
 }
 
 // ---------- Landing ----------
+// ---------- Home tabs (About / Assessment) ----------
+function switchTab(name){
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
+  document.getElementById("tab-about").classList.toggle("active", name === "about");
+  document.getElementById("tab-assessment").classList.toggle("active", name === "assessment");
+}
+document.getElementById("tabBtnAbout").addEventListener("click", () => switchTab("about"));
+document.getElementById("tabBtnAssessment").addEventListener("click", () => switchTab("assessment"));
+document.getElementById("aboutCtaBtn").addEventListener("click", () => switchTab("assessment"));
+
 function validateEntry(){
   const name = document.getElementById("nameInput").value.trim();
   const email = document.getElementById("emailInput").value.trim();
@@ -843,7 +912,7 @@ document.getElementById("startBtn").addEventListener("click", () => {
 });
 
 document.getElementById("resumeLink").addEventListener("click", () => showScreen("screen-resume"));
-document.getElementById("backToLandingBtn").addEventListener("click", () => showScreen("screen-landing"));
+document.getElementById("backToLandingBtn").addEventListener("click", () => { showScreen("screen-home"); switchTab("assessment"); });
 
 document.getElementById("resumeSubmitBtn").addEventListener("click", () => {
   const email = document.getElementById("resumeEmailInput").value.trim();
