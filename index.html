@@ -119,6 +119,15 @@
   .about-cta{ margin: 22px 0 6px; }
   .about-link{ color: var(--gold); text-decoration:underline; }
 
+  .expand-toggle{
+    background:none; border:none; color: var(--gold); font-family:'Inter',sans-serif;
+    font-size:0.82rem; font-weight:600; cursor:pointer; padding:0 0 16px; text-decoration:underline;
+    text-underline-offset:3px; display:block;
+  }
+  .expand-toggle:hover{ opacity:0.8; }
+  .expand-content{ display:none; }
+  .expand-content.open{ display:block; animation: fadein 0.25s ease; }
+
   .divider{ height:1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent); margin: 26px 0 24px; }
   .dim-list{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom: 8px; }
   .dim-chip{ border:1px solid var(--line); border-radius:10px; padding: 12px 14px; font-size:0.85rem; }
@@ -366,8 +375,10 @@
 
       <!-- ABOUT TAB -->
       <div class="tab-panel active" id="tab-about">
-        <p class="about-p">Every year, thousands of young Indians look toward Germany: for a degree, for Ausbildung, or for a chance to search for work under the Opportunity Card. What they often meet first is noise — unofficial agents, one giant invoice, study and vocational paths mixed together as if they were the same thing.</p>
-        <p class="about-p"><strong>India to Germany</strong> is being built as the opposite of that. A single place someone can depend on. You arrive, you see three clear doors, and you understand the journey before anyone asks you to register or pay.</p>
+
+        <div class="about-section-title">India to Germany</div>
+        <p class="about-p">Every year, thousands of young Indians look toward Germany: for a degree, for Ausbildung, or for a chance to search for work under the Opportunity Card. What they often meet first is noise. Unofficial agents. One giant invoice. Study and vocational paths mixed together as if they were the same thing. Language treated as a pass-or-fail wall. Official rules scattered across sites that were never written for someone sitting in India at midnight, trying to decide what to do next.</p>
+        <p class="about-p"><strong>India to Germany</strong> is being built as the opposite of that. A single place someone can depend on. You arrive, you see three clear doors, and you understand the journey before anyone asks you to register or pay. A guided journey home for ambition that already exists. Not a brochure. Not a lead form dressed as advice.</p>
 
         <div class="about-section-title">Three doors</div>
         <div class="dim-list">
@@ -376,15 +387,36 @@
           <div class="dim-chip"><b>Opportunity Card</b><span>A legal search stay, not a job in hand</span></div>
           <div class="dim-chip"><b>Readiness</b><span>Assessments name the gap and the next step</span></div>
         </div>
+        <p class="about-p">You arrive. You see three clear doors. Each door shows its stages, how long it can take, what support sits at each step, and what is free versus paid along the way.</p>
+        <button class="expand-toggle" id="toggleDoors" data-target="expandDoors">Read the full door descriptions ↓</button>
+        <div class="expand-content" id="expandDoors">
+          <p class="about-p"><strong>Ausbildung</strong> is dual vocational training: a company, a school, a trade. Not a degree dressed up as a job, and not a shortcut around language. Fit the occupation to the person, not to a demand poster. German sits on the path — a missed B1 or B2 names a gap; it does not throw you out. A real training contract and a Berufsschule, not an unofficial "placement".</p>
+          <p class="about-p"><strong>University</strong> is a German degree path. Recognition, language, applications, and the wait — kept cleanly apart from vocational routes. Profile first: direct entry, Studienkolleg, or a different door. A programme, not "Germany" as one university. No admission theatre. No seat, scholarship, or visa sold as a package.</p>
+          <p class="about-p"><strong>Opportunity Card</strong> is a legal search stay. Not a job in hand. The Chancenkarte is explained as what it is — and what it is not. Eligibility named as criteria, not as marketing. The application is permission to search, not a work contract. If you cannot fund and finish a search stay, another door may be yours.</p>
+          <p class="about-p">No visa promises. A points threshold, a language score, or a consultation is not an approval. Decisions sit with German authorities. Official figures on this path will be cited, dated, and checked.</p>
+        </div>
 
-        <p class="about-p">German readiness sits on the path, not outside it. Assessments for academic, technical, language, and employability readiness point to the next step. Failed B2 does not mean you are thrown out — it means the gap is named, and the path continues.</p>
+        <div class="about-section-title">The journey</div>
+        <p class="about-p">Who are you, and which door is yours? German readiness sits on the path, not outside it. Assessments for academic, technical, language, and employability readiness point to the next step. Failed B2 does not mean you are thrown out. It means the gap is named, and the path continues.</p>
+        <button class="expand-toggle" id="toggleJourney" data-target="expandJourney">Read more ↓</button>
+        <div class="expand-content" id="expandJourney">
+          <p class="about-p">Arrive in one place. Choose Ausbildung, University, or the Opportunity Card. Prepare with assessments that name the next step. Apply with the file for that door only. Arrive again under German rules — received, not dropped.</p>
+          <p class="about-p">We will not sell a decision that belongs to a German authority. The Card is a search stay, not a job waiting at the airport. Figures will be dated and checked. The platform is built to live in Europe because the people it serves will live under German rules.</p>
+        </div>
 
         <button class="btn about-cta" id="aboutCtaBtn">Take the readiness assessment →</button>
 
         <div class="about-section-title">Concept developer</div>
-        <p class="about-p"><strong>Vinod Velayudhan</strong> is a policy strategist, systems architect, and institution builder with nearly three decades of experience across public policy, governance reform, workforce development, and international mobility. As former COO of the Kerala Academy for Skills Excellence, he designed Kerala's decentralised skill governance framework and led major workforce planning reforms.</p>
+        <p class="about-p"><strong>Vinod Velayudhan</strong> is a policy strategist, systems architect, institution builder and transformational leader with nearly three decades of professional experience spanning public policy, governance reform, institutional transformation, workforce development, higher education, international workforce mobility and global partnerships. Throughout his career, he has specialised in designing integrated systems, governance frameworks and institutional ecosystems that enable governments and public institutions to respond effectively to emerging socio-economic challenges.</p>
+        <button class="expand-toggle" id="toggleBio" data-target="expandBio">Read full bio ↓</button>
+        <div class="expand-content" id="expandBio">
+          <p class="about-p">As the former Chief Operating Officer of the Kerala Academy for Skills Excellence (KASE), the State Skill Development Mission and Skill Secretariat of the Government of Kerala, Mr. Velayudhan led several transformational initiatives that reshaped the State's skill development ecosystem. He designed Kerala's decentralised skill governance framework, established mechanisms for convergence across government departments, developed quality assurance and accreditation systems, strengthened public-private partnerships, and introduced innovative workforce planning models aimed at improving employability and institutional performance.</p>
+          <p class="about-p">Over the course of his career, he has conceptualised and led numerous strategic initiatives involving governance reform, workforce planning, investment mobilisation, institutional restructuring, international cooperation, quality assurance systems and public-private partnership models. His work has consistently focused on building institutions and governance mechanisms that remain relevant in rapidly evolving economic and technological environments.</p>
+          <p class="about-p">The Job Watch Tower is a natural extension of this philosophy. Conceived as a dynamic labour-market intelligence and workforce-planning framework, the initiative seeks to establish an integrated, technology-enabled system capable of continuously monitoring labour-market trends, emerging occupations, technological disruptions, employer demand and future workforce requirements. The framework is designed to support evidence-based policymaking, strengthen higher-education planning, enhance career guidance, improve employability, and enable government institutions to respond proactively to changing socio-economic realities.</p>
+        </div>
 
         <div class="about-section-title">Write to us</div>
+        <p class="about-p">Tell us who you are and which door you are looking at. A student, a parent, a training partner, or someone you met at an event who wants the map — not a package. We will not treat a message as an application, and we will not reply with a guarantee. If a door is not yours, we would rather say so.</p>
         <p class="about-p"><a class="about-link" href="mailto:ciim@witbusiness.in">ciim@witbusiness.in</a></p>
       </div>
 
@@ -884,6 +916,16 @@ function switchTab(name){
 document.getElementById("tabBtnAbout").addEventListener("click", () => switchTab("about"));
 document.getElementById("tabBtnAssessment").addEventListener("click", () => switchTab("assessment"));
 document.getElementById("aboutCtaBtn").addEventListener("click", () => switchTab("assessment"));
+
+// ---------- About section expand/collapse ----------
+document.querySelectorAll(".expand-toggle").forEach(btn => {
+  btn.dataset.closedLabel = btn.textContent;
+  btn.addEventListener("click", () => {
+    const target = document.getElementById(btn.dataset.target);
+    const isOpen = target.classList.toggle("open");
+    btn.textContent = isOpen ? "Show less ↑" : btn.dataset.closedLabel;
+  });
+});
 
 function validateEntry(){
   const name = document.getElementById("nameInput").value.trim();
