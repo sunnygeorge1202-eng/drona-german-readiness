@@ -1047,11 +1047,19 @@ const DIMENSIONS = [
   }
 ];
 
-// Cluster fit sample matrix (illustrative — full build uses calibrated 13x15 matrix)
+// Cluster fit matrix — key aptitudes per cluster as named in the framework document,
+// mapped to the 13 fundamental-aptitude items (fa-*). A representative 8 of the
+// document's 15 occupational clusters, spanning care, technical, analytical, and
+// creative profiles.
 const CLUSTER_WEIGHTS = {
-  "Engineering & Industrial Technology": { mechanical: 0.9, spatial: 0.6, interestFactory: 0.7 },
-  "Construction & Craft Trades": { mechanical: 0.6, spatial: 0.85, interestFactory: 0.5 },
-  "Business & Administration": { mechanical: 0.1, spatial: 0.2, interestFactory: 0.1 }
+  "Healthcare & Care Services": { service: 0.9, social: 0.7, observation: 0.6 },
+  "Engineering & Industrial Technology": { mechanical: 0.9, spatial: 0.6, technical: 0.7 },
+  "Construction & Craft Trades": { spatial: 0.85, manual: 0.7, mechanical: 0.6 },
+  "IT & Digital Technologies": { abstract: 0.9, numerical: 0.7, verbal: 0.5 },
+  "Business & Administration": { organisational: 0.9, numerical: 0.7, verbal: 0.5 },
+  "Retail & Sales": { service: 0.8, social: 0.8, verbal: 0.6 },
+  "Laboratory & Scientific Occupations": { observation: 0.9, numerical: 0.6, abstract: 0.6 },
+  "Creative & Media Occupations": { creative: 0.9, spatial: 0.6 }
 };
 
 const BANDS = [
@@ -1397,6 +1405,21 @@ document.getElementById("submitAnswerBtn").addEventListener("click", () => {
 });
 
 // ---------- Scoring & Results ----------
+function computeClusterFits(){
+  return Object.entries(CLUSTER_WEIGHTS).map(([name, weights]) => {
+    let weightedSum = 0, weightTotal = 0;
+    Object.entries(weights).forEach(([aptitude, w]) => {
+      const itemId = "fa-" + aptitude;
+      const r = state.responses[itemId];
+      const score = r ? r.score / 2 : 0.5; // fa-* items are weight 2; fallback to neutral if unanswered
+      weightedSum += score * w;
+      weightTotal += w;
+    });
+    const fit = weightTotal > 0 ? Math.round((weightedSum / weightTotal) * 100) : 0;
+    return { name, fit };
+  }).sort((a, b) => b.fit - a.fit);
+}
+
 function computeDimensionScores(){
   const out = {};
   DIMENSIONS.forEach(d => {
@@ -1593,12 +1616,7 @@ function renderResults(){
 
   const clusterEl = document.getElementById("clusterList");
   clusterEl.innerHTML = "";
-  const mechScore = state.responses["fa-mechanical"] ? state.responses["fa-mechanical"].score/2 : 0.5;
-  const spatialScore = state.responses["fa-spatial"] ? state.responses["fa-spatial"].score/2 : 0.5;
-  const results = Object.entries(CLUSTER_WEIGHTS).map(([name, w]) => {
-    const fit = Math.round(((mechScore*w.mechanical) + (spatialScore*w.spatial)) / (w.mechanical+w.spatial) * 100);
-    return { name, fit };
-  }).sort((a,b) => b.fit - a.fit);
+  const results = computeClusterFits().slice(0, 5);
 
   results.forEach(r => {
     const row = document.createElement("div");
